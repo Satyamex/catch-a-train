@@ -1,0 +1,7 @@
+res://game_scenes/stage.tscn
+res://retro.gdshader
+res://scripts/day_0.gd
+res://prefabs/player.tscn
+res://game_scenes/map.tscn
+res://game_scenes/main_menu.tscn
+res://game_scenes/day0.tscn
