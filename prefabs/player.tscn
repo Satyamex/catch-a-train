@@ -59,6 +59,7 @@ grow_vertical = 2
 texture = ExtResource("3_r66lb")
 
 [node name="crosshair2" type="TextureRect" parent="cam_anchor/cam/UI"]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5

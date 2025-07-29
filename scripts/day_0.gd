@@ -10,7 +10,7 @@ signal interact_pressed
 @onready var player_tip_text: Label = $player/cam_anchor/cam/UI/tip
 @onready var train: Node3D = $train
 @onready var collision_shape: CollisionShape3D = $map_collisions/CollisionShape3D4
-
+const DAY_1 = preload("res://game_scenes/day1.tscn")
 var talked_to_man: bool = false
 var can_go_home: bool = false
 
@@ -43,6 +43,7 @@ func _process(delta: float) -> void:
 		if Input.is_action_just_pressed("interact"):
 			player_tip_text.hide()
 			can_go_home = true
+			get_tree().change_scene_to_packed(DAY_1)
 
 func man_talk() -> void:
 	player.can_look = false

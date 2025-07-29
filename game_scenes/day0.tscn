@@ -1560,6 +1560,24 @@ horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
 
+[node name="day_text" type="Label" parent="UI"]
+anchors_preset = -1
+anchor_left = 0.897
+anchor_top = 0.004
+anchor_right = 0.991
+anchor_bottom = 0.067
+offset_left = -0.0800171
+offset_top = 0.0799999
+offset_right = -0.240051
+offset_bottom = -0.16
+grow_horizontal = 0
+theme_override_fonts/font = ExtResource("20_etnhv")
+theme_override_font_sizes/font_size = 30
+text = "day 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
 [node name="train" parent="." instance=ExtResource("21_uppm8")]
 transform = Transform3D(0.5, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 5.67469, -0.534475, -31.5394)
 
