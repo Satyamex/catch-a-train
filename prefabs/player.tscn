@@ -33,6 +33,7 @@ mesh = SubResource("QuadMesh_72ieh")
 
 [node name="raycast" type="RayCast3D" parent="cam_anchor/cam"]
 target_position = Vector3(0, 0, -3)
+collision_mask = 2
 
 [node name="UI" type="Control" parent="cam_anchor/cam"]
 layout_mode = 3

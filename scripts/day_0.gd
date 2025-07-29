@@ -8,8 +8,11 @@ signal interact_pressed
 @onready var player: CharacterBody3D = $player
 @onready var dialogues: Label = $UI/dialogues
 @onready var player_tip_text: Label = $player/cam_anchor/cam/UI/tip
+@onready var train: Node3D = $train
+@onready var collision_shape: CollisionShape3D = $map_collisions/CollisionShape3D4
 
 var talked_to_man: bool = false
+var can_go_home: bool = false
 
 func _ready() -> void:
 	play_anim()
@@ -34,6 +37,12 @@ func _process(delta: float) -> void:
 	else:
 		player_crosshair_2.hide()
 		player_tip_text.hide()
+	if player_raycast.is_colliding() and player_raycast.get_collider().is_in_group("train") and not can_go_home:
+		player_tip_text.show()
+		player_tip_text.text = "Go home?"
+		if Input.is_action_just_pressed("interact"):
+			player_tip_text.hide()
+			can_go_home = true
 
 func man_talk() -> void:
 	player.can_look = false
@@ -78,3 +87,12 @@ func man_talk() -> void:
 	player.can_move = true
 	dialogues.hide()
 	player_tip_text.hide()
+	move_train()
+
+func move_train() -> void:
+	await get_tree().create_timer(12.0).timeout
+	train.can_move = true
+
+func _on_train_stopper_area_entered(area: Area3D) -> void:
+	if area.is_in_group("train"):
+		train.can_move = false

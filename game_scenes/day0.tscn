@@ -1,4 +1,4 @@
-[gd_scene load_steps=87 format=4 uid="uid://bdvrvao8gmygu"]
+[gd_scene load_steps=89 format=4 uid="uid://bdvrvao8gmygu"]
 
 [ext_resource type="Script" uid="uid://crkfttk2ifcx3" path="res://scripts/day_0.gd" id="1_2wk4t"]
 [ext_resource type="Texture2D" uid="uid://cf358q32rb36a" path="res://assets/Metro_PSX/Textures/Floor.png" id="1_3jxe5"]
@@ -20,6 +20,7 @@
 [ext_resource type="Texture2D" uid="uid://dj45lgs3np4qq" path="res://textures/crosshair.png" id="18_uppm8"]
 [ext_resource type="Texture2D" uid="uid://ddgti8vqsqdji" path="res://textures/crosshair2.png" id="19_ggffd"]
 [ext_resource type="FontFile" uid="uid://d3uxockcqs7bp" path="res://fonts/VT323-Regular.ttf" id="20_etnhv"]
+[ext_resource type="PackedScene" uid="uid://i1nflyi0gmdj" path="res://prefabs/train.tscn" id="21_uppm8"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_o3hr2"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -953,6 +954,8 @@ _data = {
 [sub_resource type="BoxShape3D" id="BoxShape3D_2wk4t"]
 size = Vector3(1.67285, 3.09833, 2.03418)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_uppm8"]
+
 [node name="map" type="Node3D"]
 script = ExtResource("1_2wk4t")
 
@@ -1283,6 +1286,8 @@ mesh = SubResource("QuadMesh_72ieh")
 
 [node name="raycast" type="RayCast3D" parent="player/cam_anchor/cam"]
 target_position = Vector3(0, 0, -3)
+collision_mask = 2
+collide_with_areas = true
 
 [node name="UI" type="CanvasLayer" parent="player/cam_anchor/cam"]
 
@@ -1527,6 +1532,7 @@ libraries = {
 }
 
 [node name="AnimatableBody3D" type="AnimatableBody3D" parent="man" groups=["man"]]
+collision_layer = 3
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="man/AnimatableBody3D"]
 transform = Transform3D(0.999974, 5.37556e-14, 7.78044e-13, 1.58595e-13, 0.999999, 8.9407e-08, 8.52651e-13, -8.9407e-08, 0.999999, 0.203609, 1.81937, 0.517088)
@@ -1553,3 +1559,14 @@ text = "TEXt"
 horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
+
+[node name="train" parent="." instance=ExtResource("21_uppm8")]
+transform = Transform3D(0.5, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 5.67469, -0.534475, -31.5394)
+
+[node name="train_stopper" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5853, 0.240048, 40.7331)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="train_stopper"]
+shape = SubResource("BoxShape3D_uppm8")
+
+[connection signal="area_entered" from="train_stopper" to="." method="_on_train_stopper_area_entered"]
