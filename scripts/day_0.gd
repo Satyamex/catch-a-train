@@ -91,6 +91,7 @@ func man_talk() -> void:
 	move_train()
 
 func move_train() -> void:
+	train.show()
 	await get_tree().create_timer(12.0).timeout
 	train.can_move = true
 

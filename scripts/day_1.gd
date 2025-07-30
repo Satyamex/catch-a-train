@@ -15,11 +15,24 @@ extends Node3D
 @onready var man: Node3D = $man
 @onready var train_haunted: Node3D = $"train-haunted"
 @onready var train_stopper: Area3D = $train_stopper
+@onready var player_raycast: RayCast3D = $player/cam_anchor/cam/raycast
+@onready var player_tip_text: Label = $player/cam_anchor/cam/UI/tip
+@onready var train_winning: Node3D = $"train-winning"
+@onready var player: CharacterBody3D = $player
+@onready var player_crosshair2: TextureRect = $player/cam_anchor/cam/UI/crosshair2
+
+const LOOSE_SCREEN = preload("res://game_scenes/main_menu.tscn")
+const WIN_SCREEN = preload("res://game_scenes/main_menu.tscn")
+var interacted_train: bool = false
+var haunted_train_passed: bool = false
 
 func _ready() -> void:
 	await get_tree().create_timer(6.0).timeout
+	train_passby_1.show()
 	train_passby_1.can_move = true
 	await get_tree().create_timer(20.0).timeout
+	train_passby_1.hide()
+	train_passby_2.show()
 	train_passby_2.can_move = true
 	await get_tree().create_timer(10.0).timeout
 	light.hide()
@@ -40,12 +53,58 @@ func _ready() -> void:
 	light_4.show()
 	light_6.show()
 	light_7.show()
+	train_passby_2.hide()
+	train_haunted.show()
 	train_haunted.can_move = true
-	train_stopper.show()
-	await get_tree().create_timer(30.0).timeout
-	train_passby_1.queue_free()
-	train_passby_2.queue_free()
+	await get_tree().create_timer(6.0).timeout
+	train_haunted.can_move = true
+	haunted_train_passed = true
+	await get_tree().create_timer(5.0).timeout
+	train_haunted.hide()
+	light.hide()
+	light_2.hide()
+	light_3.hide()
+	light_4.hide()
+	light_6.hide()
+	light_7.hide()
+	real_poster1.show()
+	real_poster2.show()
+	fake_poster1.hide()
+	fake_poster2.hide()
+	await get_tree().create_timer(3.0).timeout
+	light.show()
+	light_2.show()
+	light_3.show()
+	light_4.show()
+	light_6.show()
+	light_7.show()
+	train_winning.show()
+	train_winning.can_move = true
 
 func _on_train_stopper_area_entered(area: Area3D) -> void:
-	if area.is_in_group("train"):
-		train_haunted.can_move = false
+	var train = area.get_parent()
+	if train.is_in_group("train"):
+		train.can_move = false
+
+func _process(delta: float) -> void:
+		if player_raycast.is_colliding() and player_raycast.get_collider().is_in_group("train") and not interacted_train:
+			player_tip_text.show()
+			player_crosshair2.show()
+			player_tip_text.text = "Go home?"
+			if Input.is_action_just_pressed("interact"):
+				player_tip_text.hide()
+				player_crosshair2.hide()
+				if not haunted_train_passed:
+					interacted_train = true
+					get_tree().change_scene_to_packed(LOOSE_SCREEN)
+					player.game_paused = true
+				else:
+					get_tree().change_scene_to_packed(WIN_SCREEN)
+		else:
+			player_tip_text.hide()
+			player_crosshair2.hide()
+
+func _on_train_stopper_body_entered(body: Node3D) -> void:
+	var train = body.get_parent()
+	if train.is_in_group("train"):
+		train.can_move = false

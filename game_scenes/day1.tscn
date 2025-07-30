@@ -1,4 +1,4 @@
-[gd_scene load_steps=198 format=4 uid="uid://drtsfs6k6meh4"]
+[gd_scene load_steps=203 format=4 uid="uid://drtsfs6k6meh4"]
 
 [ext_resource type="Texture2D" uid="uid://cf358q32rb36a" path="res://assets/Metro_PSX/Textures/Floor.png" id="1_nopps"]
 [ext_resource type="Script" uid="uid://dqiw8hmetd7vy" path="res://scripts/day_1.gd" id="1_pslmy"]
@@ -15,10 +15,12 @@
 [ext_resource type="Texture2D" uid="uid://blplov8onn876" path="res://assets/Metro_PSX/Models/Metro_Posters.png" id="12_7l8rp"]
 [ext_resource type="Texture2D" uid="uid://dfienovfg0ycv" path="res://assets/Metro_PSX/Models/Metro_metro_map.png" id="13_cllpb"]
 [ext_resource type="Texture2D" uid="uid://8ej5eqjk0jt3" path="res://assets/Metro_PSX/Models/Metro_Vending_machine.png" id="14_qok6x"]
-[ext_resource type="PackedScene" uid="uid://chudrplilgt0g" path="res://prefabs/player.tscn" id="15_xysq2"]
+[ext_resource type="Script" uid="uid://dkkgjsj0h8u0f" path="res://scripts/player.gd" id="16_cenmx"]
+[ext_resource type="Shader" uid="uid://bked5c5tiqsc1" path="res://retro.gdshader" id="17_30hys"]
 [ext_resource type="FontFile" uid="uid://d3uxockcqs7bp" path="res://fonts/VT323-Regular.ttf" id="17_jt7tt"]
-[ext_resource type="PackedScene" uid="uid://i1nflyi0gmdj" path="res://prefabs/train.tscn" id="18_mlytr"]
+[ext_resource type="Texture2D" uid="uid://dj45lgs3np4qq" path="res://textures/crosshair.png" id="18_mjo1m"]
 [ext_resource type="Script" uid="uid://bcn6kx77o7xi1" path="res://scripts/train.gd" id="18_qok6x"]
+[ext_resource type="Texture2D" uid="uid://ddgti8vqsqdji" path="res://textures/crosshair2.png" id="19_dr1l8"]
 [ext_resource type="Texture2D" uid="uid://bnwd4jliku5em" path="res://assets/Metro_PSX/Textures/metal.jpg" id="19_xysq2"]
 [ext_resource type="Texture2D" uid="uid://mpcij00qjgur" path="res://assets/Metro_PSX/Textures/metal_01.jpg" id="20_5s5a2"]
 [ext_resource type="Texture2D" uid="uid://duk823qhdlnas" path="res://assets/Metro_PSX/Textures/metal_03.jpg" id="21_cenmx"]
@@ -699,6 +701,15 @@ size = Vector3(0.14888, 2.70297, 46.3144)
 [sub_resource type="BoxShape3D" id="BoxShape3D_uq4sd"]
 size = Vector3(0.14888, 2.70297, 44.5892)
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fp3wc"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_r66lb"]
+shader = ExtResource("17_30hys")
+
+[sub_resource type="QuadMesh" id="QuadMesh_72ieh"]
+size = Vector2(3840, 3840)
+center_offset = Vector3(1920, 1920, 0)
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_22avi"]
 resource_name = "Material.001"
 vertex_color_use_as_albedo = true
@@ -945,6 +956,7 @@ _data = {
 }
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_jt7tt"]
+size = Vector3(1.17749, 2.13281, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v1we3"]
 resource_name = "metal_02"
@@ -3824,8 +3836,88 @@ shape = SubResource("BoxShape3D_rdsue")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.49083, 1.45201, 22.8913)
 shape = SubResource("BoxShape3D_uq4sd")
 
-[node name="player" parent="." instance=ExtResource("15_xysq2")]
+[node name="player" type="CharacterBody3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 6.70954, 1.31667, 43.8291)
+script = ExtResource("16_cenmx")
+
+[node name="collision" type="CollisionShape3D" parent="player"]
+shape = SubResource("CapsuleShape3D_fp3wc")
+
+[node name="cam_anchor" type="Node3D" parent="player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.656462, 0)
+
+[node name="cam" type="Camera3D" parent="player/cam_anchor"]
+
+[node name="psx_shader" type="MeshInstance2D" parent="player/cam_anchor/cam"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_r66lb")
+mesh = SubResource("QuadMesh_72ieh")
+
+[node name="raycast" type="RayCast3D" parent="player/cam_anchor/cam"]
+target_position = Vector3(0, 0, -3)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="UI" type="Control" parent="player/cam_anchor/cam"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="crosshair" type="TextureRect" parent="player/cam_anchor/cam/UI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -3.0
+offset_top = -3.0
+offset_right = 3.0
+offset_bottom = 3.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("18_mjo1m")
+
+[node name="crosshair2" type="TextureRect" parent="player/cam_anchor/cam/UI"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -4.0
+offset_top = -4.0
+offset_right = 4.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("19_dr1l8")
+
+[node name="tip" type="Label" parent="player/cam_anchor/cam/UI"]
+visible = false
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = 13.0
+offset_right = 20.0
+offset_bottom = 43.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("17_jt7tt")
+theme_override_font_sizes/font_size = 30
+text = "tip"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
 
 [node name="man" type="Node3D" parent="."]
 transform = Transform3D(-2.18557e-08, 0, 0.5, 0, 0.5, 0, -0.5, 0, -2.18557e-08, -1.56131, -0.500038, 4.89946)
@@ -4038,13 +4130,16 @@ uppercase = true
 
 [node name="train_stopper" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5853, 0.240048, 40.7331)
-visible = false
+collision_layer = 3
+collision_mask = 3
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="train_stopper"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.165649, 0.566406, 0)
 shape = SubResource("BoxShape3D_jt7tt")
 
-[node name="train-passby1" type="Node3D" parent="." groups=["train"]]
+[node name="train-passby1" type="Node3D" parent="."]
 transform = Transform3D(0.5, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 5.74118, -0.667762, -31.2578)
+visible = false
 script = ExtResource("18_qok6x")
 
 [node name="1" type="Node3D" parent="train-passby1"]
@@ -4529,8 +4624,9 @@ collision_layer = 3
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.5, 4, -6)
 shape = SubResource("BoxShape3D_72a88")
 
-[node name="train-passby2" type="Node3D" parent="." groups=["train"]]
+[node name="train-passby2" type="Node3D" parent="."]
 transform = Transform3D(0.5, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 5.74118, -0.667762, -31.2578)
+visible = false
 script = ExtResource("18_qok6x")
 
 [node name="1" type="Node3D" parent="train-passby2"]
@@ -5015,7 +5111,981 @@ collision_layer = 3
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.5, 4, -6)
 shape = SubResource("BoxShape3D_72a88")
 
-[node name="train-haunted" parent="." instance=ExtResource("18_mlytr")]
+[node name="train-winning" type="Node3D" parent="." groups=["train"]]
 transform = Transform3D(0.5, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 5.74118, -0.667762, -31.2578)
+visible = false
+script = ExtResource("18_qok6x")
+
+[node name="1" type="Node3D" parent="train-winning"]
+
+[node name="subway_car" type="MeshInstance3D" parent="train-winning/1"]
+transform = Transform3D(0, 187.451, 5.58648e-06, 5.58648e-06, 0, 187.451, 187.451, 5.58648e-06, 0, -6.538, 2.90095, 6.78997)
+mesh = SubResource("ArrayMesh_j1rrt")
+skeleton = NodePath("")
+
+[node name="seats" type="MeshInstance3D" parent="train-winning/1"]
+transform = Transform3D(-3.07034, 0, 0, 0, 3.66013e-07, -3.07034, 0, 3.07034, 3.66013e-07, -5.01985, 1.92181, 3.25726)
+mesh = SubResource("ArrayMesh_r8j0n")
+skeleton = NodePath("")
+
+[node name="seats_001" type="MeshInstance3D" parent="train-winning/1"]
+transform = Transform3D(-3.07034, 0, 0, 0, 3.66013e-07, -3.07034, 0, 3.07034, 3.66013e-07, -5.01985, 1.92181, -2.06119)
+mesh = SubResource("ArrayMesh_wwjb8")
+skeleton = NodePath("")
+
+[node name="Railing_V" type="MeshInstance3D" parent="train-winning/1"]
+transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, -5.29283, 3.26778, 3.29545)
+mesh = SubResource("ArrayMesh_5c6yo")
+skeleton = NodePath("")
+
+[node name="Railing_V_001" type="MeshInstance3D" parent="train-winning/1"]
+transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, -5.24641, 3.08429, -2.05567)
+mesh = SubResource("ArrayMesh_6i7oc")
+skeleton = NodePath("")
+
+[node name="seats_002" type="MeshInstance3D" parent="train-winning/1"]
+transform = Transform3D(-3.07034, 0, 0, 0, 3.66013e-07, -3.07034, 0, 3.07034, 3.66013e-07, -5.01985, 1.92181, 10.2313)
+mesh = SubResource("ArrayMesh_but25")
+skeleton = NodePath("")
+
+[node name="Railing_V_002" type="MeshInstance3D" parent="train-winning/1"]
+transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, -5.29283, 3.26778, 10.2695)
+mesh = SubResource("ArrayMesh_c85vi")
+skeleton = NodePath("")
+
+[node name="seats_003" type="MeshInstance3D" parent="train-winning/1"]
+transform = Transform3D(-3.07034, 0, 0, 0, 3.66013e-07, -3.07034, 0, 3.07034, 3.66013e-07, -5.01985, 1.92181, 15.64)
+mesh = SubResource("ArrayMesh_xa1qy")
+skeleton = NodePath("")
+
+[node name="Railing_V_003" type="MeshInstance3D" parent="train-winning/1"]
+transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, -5.24641, 3.08429, 15.6455)
+mesh = SubResource("ArrayMesh_3665b")
+skeleton = NodePath("")
+
+[node name="seats_004" type="MeshInstance3D" parent="train-winning/1"]
+transform = Transform3D(3.07034, 0, 0, 0, -3.66013e-07, -3.07034, 0, 3.07034, -3.66013e-07, -8.06141, 1.92181, 3.25726)
+mesh = SubResource("ArrayMesh_h7lpy")
+skeleton = NodePath("")
+
+[node name="seats_005" type="MeshInstance3D" parent="train-winning/1"]
+transform = Transform3D(3.07034, 0, 0, 0, -3.66013e-07, -3.07034, 0, 3.07034, -3.66013e-07, -8.06141, 1.92181, -2.06119)
+mesh = SubResource("ArrayMesh_yvai8")
+skeleton = NodePath("")
+
+[node name="Railing_V_004" type="MeshInstance3D" parent="train-winning/1"]
+transform = Transform3D(-100, 0, 0, 0, 1.19209e-05, 100, 0, -100, 1.19209e-05, -7.78843, 3.26778, 3.29545)
+mesh = SubResource("ArrayMesh_pf6yc")
+skeleton = NodePath("")
+
+[node name="Railing_V_005" type="MeshInstance3D" parent="train-winning/1"]
+transform = Transform3D(-100, 0, 0, 0, 1.19209e-05, 100, 0, -100, 1.19209e-05, -7.83485, 3.08429, -2.05567)
+mesh = SubResource("ArrayMesh_pqxxi")
+skeleton = NodePath("")
+
+[node name="seats_006" type="MeshInstance3D" parent="train-winning/1"]
+transform = Transform3D(3.07034, 0, 0, 0, -3.66013e-07, -3.07034, 0, 3.07034, -3.66013e-07, -8.06141, 1.92181, 10.2313)
+mesh = SubResource("ArrayMesh_euuqn")
+skeleton = NodePath("")
+
+[node name="Railing_V_006" type="MeshInstance3D" parent="train-winning/1"]
+transform = Transform3D(-100, 0, 0, 0, 1.19209e-05, 100, 0, -100, 1.19209e-05, -7.78843, 3.26778, 10.2695)
+mesh = SubResource("ArrayMesh_imbtv")
+skeleton = NodePath("")
+
+[node name="seats_007" type="MeshInstance3D" parent="train-winning/1"]
+transform = Transform3D(3.07034, 0, 0, 0, -3.66013e-07, -3.07034, 0, 3.07034, -3.66013e-07, -8.06141, 1.92181, 15.64)
+mesh = SubResource("ArrayMesh_0qqcc")
+skeleton = NodePath("")
+
+[node name="Railing_V_007" type="MeshInstance3D" parent="train-winning/1"]
+transform = Transform3D(-100, 0, 0, 0, 1.19209e-05, 100, 0, -100, 1.19209e-05, -7.83485, 3.08429, 15.6455)
+mesh = SubResource("ArrayMesh_1hb7n")
+skeleton = NodePath("")
+
+[node name="Railing_V_008" type="MeshInstance3D" parent="train-winning/1"]
+transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, -6.538, 4.23119, 10.6617)
+mesh = SubResource("ArrayMesh_dljp6")
+skeleton = NodePath("")
+
+[node name="Railing_V_009" type="MeshInstance3D" parent="train-winning/1"]
+transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, -6.538, 4.23119, 2.9408)
+mesh = SubResource("ArrayMesh_csrfr")
+skeleton = NodePath("")
+
+[node name="Door" type="MeshInstance3D" parent="train-winning/1"]
+transform = Transform3D(0, 73.4624, 2.98023e-06, 2.98023e-06, 0, 100, 100, 2.18935e-06, 0, -8.34263, 2.7449, -1.0266)
+mesh = SubResource("ArrayMesh_fw3rn")
+skeleton = NodePath("")
+
+[node name="Glass_001" type="MeshInstance3D" parent="train-winning/1"]
+transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, -8.32506, 3.13835, -2.77403)
+mesh = SubResource("ArrayMesh_0c7xx")
+skeleton = NodePath("")
+
+[node name="Door_001" type="MeshInstance3D" parent="train-winning/1"]
+transform = Transform3D(0, 73.4624, -2.98023e-06, 2.98023e-06, 0, 100, -100, 2.18935e-06, 0, -8.34263, 2.7449, 0.605652)
+mesh = SubResource("ArrayMesh_2bsye")
+skeleton = NodePath("")
+
+[node name="Door_002" type="MeshInstance3D" parent="train-winning/1"]
+transform = Transform3D(0, 73.4624, 2.98023e-06, 2.98023e-06, 0, 100, 100, 2.18935e-06, 0, -8.34263, 2.7449, 5.9728)
+mesh = SubResource("ArrayMesh_xy6ce")
+skeleton = NodePath("")
+
+[node name="Door_003" type="MeshInstance3D" parent="train-winning/1"]
+transform = Transform3D(0, 73.4624, -2.98023e-06, 2.98023e-06, 0, 100, -100, 2.18935e-06, 0, -8.34263, 2.7449, 7.60505)
+mesh = SubResource("ArrayMesh_3o2sq")
+skeleton = NodePath("")
+
+[node name="Door_004" type="MeshInstance3D" parent="train-winning/1"]
+transform = Transform3D(0, 73.4624, 2.98023e-06, 2.98023e-06, 0, 100, 100, 2.18935e-06, 0, -8.34263, 2.7449, 12.9586)
+mesh = SubResource("ArrayMesh_7mqry")
+skeleton = NodePath("")
+
+[node name="Door_005" type="MeshInstance3D" parent="train-winning/1"]
+transform = Transform3D(0, 73.4624, -2.98023e-06, 2.98023e-06, 0, 100, -100, 2.18935e-06, 0, -8.34263, 2.7449, 14.5908)
+mesh = SubResource("ArrayMesh_kwgd3")
+skeleton = NodePath("")
+
+[node name="Door_006" type="MeshInstance3D" parent="train-winning/1"]
+transform = Transform3D(0, 73.4624, 2.98023e-06, 2.98023e-06, 0, 100, 100, 2.18935e-06, 0, -4.73182, 2.7449, -1.0266)
+mesh = SubResource("ArrayMesh_xcw4s")
+skeleton = NodePath("")
+
+[node name="Door_007" type="MeshInstance3D" parent="train-winning/1"]
+transform = Transform3D(0, 73.4624, -2.98023e-06, 2.98023e-06, 0, 100, -100, 2.18935e-06, 0, -4.73182, 2.7449, 0.605652)
+mesh = SubResource("ArrayMesh_nl7r5")
+skeleton = NodePath("")
+
+[node name="Door_008" type="MeshInstance3D" parent="train-winning/1"]
+transform = Transform3D(0, 73.4624, 2.98023e-06, 2.98023e-06, 0, 100, 100, 2.18935e-06, 0, -4.73182, 2.7449, 5.9728)
+mesh = SubResource("ArrayMesh_qp4d3")
+skeleton = NodePath("")
+
+[node name="Door_009" type="MeshInstance3D" parent="train-winning/1"]
+transform = Transform3D(0, 73.4624, -2.98023e-06, 2.98023e-06, 0, 100, -100, 2.18935e-06, 0, -4.73182, 2.7449, 7.60505)
+mesh = SubResource("ArrayMesh_85cit")
+skeleton = NodePath("")
+
+[node name="Door_010" type="MeshInstance3D" parent="train-winning/1"]
+transform = Transform3D(0, 73.4624, 2.98023e-06, 2.98023e-06, 0, 100, 100, 2.18935e-06, 0, -4.73182, 2.7449, 12.9586)
+mesh = SubResource("ArrayMesh_efiip")
+skeleton = NodePath("")
+
+[node name="Door_011" type="MeshInstance3D" parent="train-winning/1"]
+transform = Transform3D(0, 73.4624, -2.98023e-06, 2.98023e-06, 0, 100, -100, 2.18935e-06, 0, -4.73182, 2.7449, 14.5908)
+mesh = SubResource("ArrayMesh_vmgxw")
+skeleton = NodePath("")
+
+[node name="Door_012" type="MeshInstance3D" parent="train-winning/1"]
+transform = Transform3D(0, 73.4624, -2.98023e-06, 2.98023e-06, 0, 100, -100, 2.18935e-06, 0, -8.34263, 2.7449, 17.4084)
+mesh = SubResource("ArrayMesh_8gl30")
+skeleton = NodePath("")
+
+[node name="Door_013" type="MeshInstance3D" parent="train-winning/1"]
+transform = Transform3D(0, 73.4624, -2.98023e-06, 2.98023e-06, 0, 100, -100, 2.18935e-06, 0, -4.73182, 2.7449, 17.4084)
+mesh = SubResource("ArrayMesh_81mpv")
+skeleton = NodePath("")
+
+[node name="Glass_002" type="MeshInstance3D" parent="train-winning/1"]
+transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, -8.32506, 3.13835, 3.8418)
+mesh = SubResource("ArrayMesh_0c7ys")
+skeleton = NodePath("")
+
+[node name="Glass_003" type="MeshInstance3D" parent="train-winning/1"]
+transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, -8.32506, 3.13835, 10.8289)
+mesh = SubResource("ArrayMesh_ag3vk")
+skeleton = NodePath("")
+
+[node name="Glass_004" type="MeshInstance3D" parent="train-winning/1"]
+transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, -8.32506, 3.13835, 15.6385)
+mesh = SubResource("ArrayMesh_kgpvp")
+skeleton = NodePath("")
+
+[node name="Glass_005" type="MeshInstance3D" parent="train-winning/1"]
+transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, -4.72714, 3.13835, -2.77403)
+mesh = SubResource("ArrayMesh_mk7js")
+skeleton = NodePath("")
+
+[node name="Glass_006" type="MeshInstance3D" parent="train-winning/1"]
+transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, -4.72714, 3.13835, 3.8418)
+mesh = SubResource("ArrayMesh_122ja")
+skeleton = NodePath("")
+
+[node name="Glass_007" type="MeshInstance3D" parent="train-winning/1"]
+transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, -4.72714, 3.13835, 10.8289)
+mesh = SubResource("ArrayMesh_ajemk")
+skeleton = NodePath("")
+
+[node name="Glass_012" type="MeshInstance3D" parent="train-winning/1"]
+transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, -4.72714, 3.13835, 15.6385)
+mesh = SubResource("ArrayMesh_nbuix")
+skeleton = NodePath("")
+
+[node name="Door_014" type="MeshInstance3D" parent="train-winning/1"]
+transform = Transform3D(100, 0, 0, 0, -8.75741e-06, 100, 0, -73.4624, -1.19209e-05, -6.91546, 2.7449, -4.72362)
+mesh = SubResource("ArrayMesh_4ppvf")
+skeleton = NodePath("")
+
+[node name="Door_015" type="MeshInstance3D" parent="train-winning/1"]
+transform = Transform3D(100, 0, 0, 0, -8.75741e-06, 100, 0, -73.4624, -1.19209e-05, -6.91546, 2.7449, 18.3176)
+mesh = SubResource("ArrayMesh_k8txk")
+skeleton = NodePath("")
+
+[node name="Glass_008" type="MeshInstance3D" parent="train-winning/1"]
+transform = Transform3D(0, -100, -2.98023e-06, -2.98023e-06, 0, 100, -100, 2.98023e-06, 0, -5.34771, 3.29759, 18.3341)
+mesh = SubResource("ArrayMesh_je7wk")
+skeleton = NodePath("")
+
+[node name="Glass_009" type="MeshInstance3D" parent="train-winning/1"]
+transform = Transform3D(0, -100, -2.98023e-06, -2.98023e-06, 0, 100, -100, 2.98023e-06, 0, -7.72354, 3.29759, 18.3341)
+mesh = SubResource("ArrayMesh_3h0kb")
+skeleton = NodePath("")
+
+[node name="Glass_010" type="MeshInstance3D" parent="train-winning/1"]
+transform = Transform3D(0, -100, -2.98023e-06, -2.98023e-06, 0, 100, -100, 2.98023e-06, 0, -5.34771, 3.29759, -4.71556)
+mesh = SubResource("ArrayMesh_eebdx")
+skeleton = NodePath("")
+
+[node name="Glass_011" type="MeshInstance3D" parent="train-winning/1"]
+transform = Transform3D(0, -100, -2.98023e-06, -2.98023e-06, 0, 100, -100, 2.98023e-06, 0, -7.72354, 3.29759, -4.71556)
+mesh = SubResource("ArrayMesh_aj3nk")
+skeleton = NodePath("")
+
+[node name="2" type="Node3D" parent="train-winning"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -23)
+
+[node name="subway_car" type="MeshInstance3D" parent="train-winning/2"]
+transform = Transform3D(0, 187.451, 5.58648e-06, 5.58648e-06, 0, 187.451, 187.451, 5.58648e-06, 0, -6.538, 2.90095, 6.78997)
+mesh = SubResource("ArrayMesh_j1rrt")
+skeleton = NodePath("")
+
+[node name="seats" type="MeshInstance3D" parent="train-winning/2"]
+transform = Transform3D(-3.07034, 0, 0, 0, 3.66013e-07, -3.07034, 0, 3.07034, 3.66013e-07, -5.01985, 1.92181, 3.25726)
+mesh = SubResource("ArrayMesh_r8j0n")
+skeleton = NodePath("")
+
+[node name="seats_001" type="MeshInstance3D" parent="train-winning/2"]
+transform = Transform3D(-3.07034, 0, 0, 0, 3.66013e-07, -3.07034, 0, 3.07034, 3.66013e-07, -5.01985, 1.92181, -2.06119)
+mesh = SubResource("ArrayMesh_wwjb8")
+skeleton = NodePath("")
+
+[node name="Railing_V" type="MeshInstance3D" parent="train-winning/2"]
+transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, -5.29283, 3.26778, 3.29545)
+mesh = SubResource("ArrayMesh_5c6yo")
+skeleton = NodePath("")
+
+[node name="Railing_V_001" type="MeshInstance3D" parent="train-winning/2"]
+transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, -5.24641, 3.08429, -2.05567)
+mesh = SubResource("ArrayMesh_6i7oc")
+skeleton = NodePath("")
+
+[node name="seats_002" type="MeshInstance3D" parent="train-winning/2"]
+transform = Transform3D(-3.07034, 0, 0, 0, 3.66013e-07, -3.07034, 0, 3.07034, 3.66013e-07, -5.01985, 1.92181, 10.2313)
+mesh = SubResource("ArrayMesh_but25")
+skeleton = NodePath("")
+
+[node name="Railing_V_002" type="MeshInstance3D" parent="train-winning/2"]
+transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, -5.29283, 3.26778, 10.2695)
+mesh = SubResource("ArrayMesh_c85vi")
+skeleton = NodePath("")
+
+[node name="seats_003" type="MeshInstance3D" parent="train-winning/2"]
+transform = Transform3D(-3.07034, 0, 0, 0, 3.66013e-07, -3.07034, 0, 3.07034, 3.66013e-07, -5.01985, 1.92181, 15.64)
+mesh = SubResource("ArrayMesh_xa1qy")
+skeleton = NodePath("")
+
+[node name="Railing_V_003" type="MeshInstance3D" parent="train-winning/2"]
+transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, -5.24641, 3.08429, 15.6455)
+mesh = SubResource("ArrayMesh_3665b")
+skeleton = NodePath("")
+
+[node name="seats_004" type="MeshInstance3D" parent="train-winning/2"]
+transform = Transform3D(3.07034, 0, 0, 0, -3.66013e-07, -3.07034, 0, 3.07034, -3.66013e-07, -8.06141, 1.92181, 3.25726)
+mesh = SubResource("ArrayMesh_h7lpy")
+skeleton = NodePath("")
+
+[node name="seats_005" type="MeshInstance3D" parent="train-winning/2"]
+transform = Transform3D(3.07034, 0, 0, 0, -3.66013e-07, -3.07034, 0, 3.07034, -3.66013e-07, -8.06141, 1.92181, -2.06119)
+mesh = SubResource("ArrayMesh_yvai8")
+skeleton = NodePath("")
+
+[node name="Railing_V_004" type="MeshInstance3D" parent="train-winning/2"]
+transform = Transform3D(-100, 0, 0, 0, 1.19209e-05, 100, 0, -100, 1.19209e-05, -7.78843, 3.26778, 3.29545)
+mesh = SubResource("ArrayMesh_pf6yc")
+skeleton = NodePath("")
+
+[node name="Railing_V_005" type="MeshInstance3D" parent="train-winning/2"]
+transform = Transform3D(-100, 0, 0, 0, 1.19209e-05, 100, 0, -100, 1.19209e-05, -7.83485, 3.08429, -2.05567)
+mesh = SubResource("ArrayMesh_pqxxi")
+skeleton = NodePath("")
+
+[node name="seats_006" type="MeshInstance3D" parent="train-winning/2"]
+transform = Transform3D(3.07034, 0, 0, 0, -3.66013e-07, -3.07034, 0, 3.07034, -3.66013e-07, -8.06141, 1.92181, 10.2313)
+mesh = SubResource("ArrayMesh_euuqn")
+skeleton = NodePath("")
+
+[node name="Railing_V_006" type="MeshInstance3D" parent="train-winning/2"]
+transform = Transform3D(-100, 0, 0, 0, 1.19209e-05, 100, 0, -100, 1.19209e-05, -7.78843, 3.26778, 10.2695)
+mesh = SubResource("ArrayMesh_imbtv")
+skeleton = NodePath("")
+
+[node name="seats_007" type="MeshInstance3D" parent="train-winning/2"]
+transform = Transform3D(3.07034, 0, 0, 0, -3.66013e-07, -3.07034, 0, 3.07034, -3.66013e-07, -8.06141, 1.92181, 15.64)
+mesh = SubResource("ArrayMesh_0qqcc")
+skeleton = NodePath("")
+
+[node name="Railing_V_007" type="MeshInstance3D" parent="train-winning/2"]
+transform = Transform3D(-100, 0, 0, 0, 1.19209e-05, 100, 0, -100, 1.19209e-05, -7.83485, 3.08429, 15.6455)
+mesh = SubResource("ArrayMesh_1hb7n")
+skeleton = NodePath("")
+
+[node name="Railing_V_008" type="MeshInstance3D" parent="train-winning/2"]
+transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, -6.538, 4.23119, 10.6617)
+mesh = SubResource("ArrayMesh_dljp6")
+skeleton = NodePath("")
+
+[node name="Railing_V_009" type="MeshInstance3D" parent="train-winning/2"]
+transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, -6.538, 4.23119, 2.9408)
+mesh = SubResource("ArrayMesh_csrfr")
+skeleton = NodePath("")
+
+[node name="Door" type="MeshInstance3D" parent="train-winning/2"]
+transform = Transform3D(0, 73.4624, 2.98023e-06, 2.98023e-06, 0, 100, 100, 2.18935e-06, 0, -8.34263, 2.7449, -1.0266)
+mesh = SubResource("ArrayMesh_fw3rn")
+skeleton = NodePath("")
+
+[node name="Glass_001" type="MeshInstance3D" parent="train-winning/2"]
+transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, -8.32506, 3.13835, -2.77403)
+mesh = SubResource("ArrayMesh_0c7xx")
+skeleton = NodePath("")
+
+[node name="Door_001" type="MeshInstance3D" parent="train-winning/2"]
+transform = Transform3D(0, 73.4624, -2.98023e-06, 2.98023e-06, 0, 100, -100, 2.18935e-06, 0, -8.34263, 2.7449, 0.605652)
+mesh = SubResource("ArrayMesh_2bsye")
+skeleton = NodePath("")
+
+[node name="Door_002" type="MeshInstance3D" parent="train-winning/2"]
+transform = Transform3D(0, 73.4624, 2.98023e-06, 2.98023e-06, 0, 100, 100, 2.18935e-06, 0, -8.34263, 2.7449, 5.9728)
+mesh = SubResource("ArrayMesh_xy6ce")
+skeleton = NodePath("")
+
+[node name="Door_003" type="MeshInstance3D" parent="train-winning/2"]
+transform = Transform3D(0, 73.4624, -2.98023e-06, 2.98023e-06, 0, 100, -100, 2.18935e-06, 0, -8.34263, 2.7449, 7.60505)
+mesh = SubResource("ArrayMesh_3o2sq")
+skeleton = NodePath("")
+
+[node name="Door_004" type="MeshInstance3D" parent="train-winning/2"]
+transform = Transform3D(0, 73.4624, 2.98023e-06, 2.98023e-06, 0, 100, 100, 2.18935e-06, 0, -8.34263, 2.7449, 12.9586)
+mesh = SubResource("ArrayMesh_7mqry")
+skeleton = NodePath("")
+
+[node name="Door_005" type="MeshInstance3D" parent="train-winning/2"]
+transform = Transform3D(0, 73.4624, -2.98023e-06, 2.98023e-06, 0, 100, -100, 2.18935e-06, 0, -8.34263, 2.7449, 14.5908)
+mesh = SubResource("ArrayMesh_kwgd3")
+skeleton = NodePath("")
+
+[node name="Door_006" type="MeshInstance3D" parent="train-winning/2"]
+transform = Transform3D(0, 73.4624, 2.98023e-06, 2.98023e-06, 0, 100, 100, 2.18935e-06, 0, -4.73182, 2.7449, -1.0266)
+mesh = SubResource("ArrayMesh_xcw4s")
+skeleton = NodePath("")
+
+[node name="Door_007" type="MeshInstance3D" parent="train-winning/2"]
+transform = Transform3D(0, 73.4624, -2.98023e-06, 2.98023e-06, 0, 100, -100, 2.18935e-06, 0, -4.73182, 2.7449, 0.605652)
+mesh = SubResource("ArrayMesh_nl7r5")
+skeleton = NodePath("")
+
+[node name="Door_008" type="MeshInstance3D" parent="train-winning/2"]
+transform = Transform3D(0, 73.4624, 2.98023e-06, 2.98023e-06, 0, 100, 100, 2.18935e-06, 0, -4.73182, 2.7449, 5.9728)
+mesh = SubResource("ArrayMesh_qp4d3")
+skeleton = NodePath("")
+
+[node name="Door_009" type="MeshInstance3D" parent="train-winning/2"]
+transform = Transform3D(0, 73.4624, -2.98023e-06, 2.98023e-06, 0, 100, -100, 2.18935e-06, 0, -4.73182, 2.7449, 7.60505)
+mesh = SubResource("ArrayMesh_85cit")
+skeleton = NodePath("")
+
+[node name="Door_010" type="MeshInstance3D" parent="train-winning/2"]
+transform = Transform3D(0, 73.4624, 2.98023e-06, 2.98023e-06, 0, 100, 100, 2.18935e-06, 0, -4.73182, 2.7449, 12.9586)
+mesh = SubResource("ArrayMesh_efiip")
+skeleton = NodePath("")
+
+[node name="Door_011" type="MeshInstance3D" parent="train-winning/2"]
+transform = Transform3D(0, 73.4624, -2.98023e-06, 2.98023e-06, 0, 100, -100, 2.18935e-06, 0, -4.73182, 2.7449, 14.5908)
+mesh = SubResource("ArrayMesh_vmgxw")
+skeleton = NodePath("")
+
+[node name="Door_012" type="MeshInstance3D" parent="train-winning/2"]
+transform = Transform3D(0, 73.4624, -2.98023e-06, 2.98023e-06, 0, 100, -100, 2.18935e-06, 0, -8.34263, 2.7449, 17.4084)
+mesh = SubResource("ArrayMesh_8gl30")
+skeleton = NodePath("")
+
+[node name="Door_013" type="MeshInstance3D" parent="train-winning/2"]
+transform = Transform3D(0, 73.4624, -2.98023e-06, 2.98023e-06, 0, 100, -100, 2.18935e-06, 0, -4.73182, 2.7449, 17.4084)
+mesh = SubResource("ArrayMesh_81mpv")
+skeleton = NodePath("")
+
+[node name="Glass_002" type="MeshInstance3D" parent="train-winning/2"]
+transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, -8.32506, 3.13835, 3.8418)
+mesh = SubResource("ArrayMesh_0c7ys")
+skeleton = NodePath("")
+
+[node name="Glass_003" type="MeshInstance3D" parent="train-winning/2"]
+transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, -8.32506, 3.13835, 10.8289)
+mesh = SubResource("ArrayMesh_ag3vk")
+skeleton = NodePath("")
+
+[node name="Glass_004" type="MeshInstance3D" parent="train-winning/2"]
+transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, -8.32506, 3.13835, 15.6385)
+mesh = SubResource("ArrayMesh_kgpvp")
+skeleton = NodePath("")
+
+[node name="Glass_005" type="MeshInstance3D" parent="train-winning/2"]
+transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, -4.72714, 3.13835, -2.77403)
+mesh = SubResource("ArrayMesh_mk7js")
+skeleton = NodePath("")
+
+[node name="Glass_006" type="MeshInstance3D" parent="train-winning/2"]
+transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, -4.72714, 3.13835, 3.8418)
+mesh = SubResource("ArrayMesh_122ja")
+skeleton = NodePath("")
+
+[node name="Glass_007" type="MeshInstance3D" parent="train-winning/2"]
+transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, -4.72714, 3.13835, 10.8289)
+mesh = SubResource("ArrayMesh_ajemk")
+skeleton = NodePath("")
+
+[node name="Glass_012" type="MeshInstance3D" parent="train-winning/2"]
+transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, -4.72714, 3.13835, 15.6385)
+mesh = SubResource("ArrayMesh_nbuix")
+skeleton = NodePath("")
+
+[node name="Door_014" type="MeshInstance3D" parent="train-winning/2"]
+transform = Transform3D(100, 0, 0, 0, -8.75741e-06, 100, 0, -73.4624, -1.19209e-05, -6.91546, 2.7449, -4.72362)
+mesh = SubResource("ArrayMesh_4ppvf")
+skeleton = NodePath("")
+
+[node name="Door_015" type="MeshInstance3D" parent="train-winning/2"]
+transform = Transform3D(100, 0, 0, 0, -8.75741e-06, 100, 0, -73.4624, -1.19209e-05, -6.91546, 2.7449, 18.3176)
+mesh = SubResource("ArrayMesh_k8txk")
+skeleton = NodePath("")
+
+[node name="Glass_008" type="MeshInstance3D" parent="train-winning/2"]
+transform = Transform3D(0, -100, -2.98023e-06, -2.98023e-06, 0, 100, -100, 2.98023e-06, 0, -5.34771, 3.29759, 18.3341)
+mesh = SubResource("ArrayMesh_je7wk")
+skeleton = NodePath("")
+
+[node name="Glass_009" type="MeshInstance3D" parent="train-winning/2"]
+transform = Transform3D(0, -100, -2.98023e-06, -2.98023e-06, 0, 100, -100, 2.98023e-06, 0, -7.72354, 3.29759, 18.3341)
+mesh = SubResource("ArrayMesh_3h0kb")
+skeleton = NodePath("")
+
+[node name="Glass_010" type="MeshInstance3D" parent="train-winning/2"]
+transform = Transform3D(0, -100, -2.98023e-06, -2.98023e-06, 0, 100, -100, 2.98023e-06, 0, -5.34771, 3.29759, -4.71556)
+mesh = SubResource("ArrayMesh_eebdx")
+skeleton = NodePath("")
+
+[node name="Glass_011" type="MeshInstance3D" parent="train-winning/2"]
+transform = Transform3D(0, -100, -2.98023e-06, -2.98023e-06, 0, 100, -100, 2.98023e-06, 0, -7.72354, 3.29759, -4.71556)
+mesh = SubResource("ArrayMesh_aj3nk")
+skeleton = NodePath("")
+
+[node name="Area3D" type="Area3D" parent="train-winning" groups=["train"]]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="train-winning/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.5, 4, -6)
+shape = SubResource("BoxShape3D_72a88")
+
+[node name="train-haunted" type="Node3D" parent="." groups=["train"]]
+transform = Transform3D(0.5, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 5.74118, -0.667762, -31.2578)
+visible = false
+script = ExtResource("18_qok6x")
+
+[node name="1" type="Node3D" parent="train-haunted"]
+
+[node name="subway_car" type="MeshInstance3D" parent="train-haunted/1"]
+transform = Transform3D(0, 187.451, 5.58648e-06, 5.58648e-06, 0, 187.451, 187.451, 5.58648e-06, 0, -6.538, 2.90095, 6.78997)
+mesh = SubResource("ArrayMesh_j1rrt")
+skeleton = NodePath("")
+
+[node name="seats" type="MeshInstance3D" parent="train-haunted/1"]
+transform = Transform3D(-3.07034, 0, 0, 0, 3.66013e-07, -3.07034, 0, 3.07034, 3.66013e-07, -5.01985, 1.92181, 3.25726)
+mesh = SubResource("ArrayMesh_r8j0n")
+skeleton = NodePath("")
+
+[node name="seats_001" type="MeshInstance3D" parent="train-haunted/1"]
+transform = Transform3D(-3.07034, 0, 0, 0, 3.66013e-07, -3.07034, 0, 3.07034, 3.66013e-07, -5.01985, 1.92181, -2.06119)
+mesh = SubResource("ArrayMesh_wwjb8")
+skeleton = NodePath("")
+
+[node name="Railing_V" type="MeshInstance3D" parent="train-haunted/1"]
+transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, -5.29283, 3.26778, 3.29545)
+mesh = SubResource("ArrayMesh_5c6yo")
+skeleton = NodePath("")
+
+[node name="Railing_V_001" type="MeshInstance3D" parent="train-haunted/1"]
+transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, -5.24641, 3.08429, -2.05567)
+mesh = SubResource("ArrayMesh_6i7oc")
+skeleton = NodePath("")
+
+[node name="seats_002" type="MeshInstance3D" parent="train-haunted/1"]
+transform = Transform3D(-3.07034, 0, 0, 0, 3.66013e-07, -3.07034, 0, 3.07034, 3.66013e-07, -5.01985, 1.92181, 10.2313)
+mesh = SubResource("ArrayMesh_but25")
+skeleton = NodePath("")
+
+[node name="Railing_V_002" type="MeshInstance3D" parent="train-haunted/1"]
+transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, -5.29283, 3.26778, 10.2695)
+mesh = SubResource("ArrayMesh_c85vi")
+skeleton = NodePath("")
+
+[node name="seats_003" type="MeshInstance3D" parent="train-haunted/1"]
+transform = Transform3D(-3.07034, 0, 0, 0, 3.66013e-07, -3.07034, 0, 3.07034, 3.66013e-07, -5.01985, 1.92181, 15.64)
+mesh = SubResource("ArrayMesh_xa1qy")
+skeleton = NodePath("")
+
+[node name="Railing_V_003" type="MeshInstance3D" parent="train-haunted/1"]
+transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, -5.24641, 3.08429, 15.6455)
+mesh = SubResource("ArrayMesh_3665b")
+skeleton = NodePath("")
+
+[node name="seats_004" type="MeshInstance3D" parent="train-haunted/1"]
+transform = Transform3D(3.07034, 0, 0, 0, -3.66013e-07, -3.07034, 0, 3.07034, -3.66013e-07, -8.06141, 1.92181, 3.25726)
+mesh = SubResource("ArrayMesh_h7lpy")
+skeleton = NodePath("")
+
+[node name="seats_005" type="MeshInstance3D" parent="train-haunted/1"]
+transform = Transform3D(3.07034, 0, 0, 0, -3.66013e-07, -3.07034, 0, 3.07034, -3.66013e-07, -8.06141, 1.92181, -2.06119)
+mesh = SubResource("ArrayMesh_yvai8")
+skeleton = NodePath("")
+
+[node name="Railing_V_004" type="MeshInstance3D" parent="train-haunted/1"]
+transform = Transform3D(-100, 0, 0, 0, 1.19209e-05, 100, 0, -100, 1.19209e-05, -7.78843, 3.26778, 3.29545)
+mesh = SubResource("ArrayMesh_pf6yc")
+skeleton = NodePath("")
+
+[node name="Railing_V_005" type="MeshInstance3D" parent="train-haunted/1"]
+transform = Transform3D(-100, 0, 0, 0, 1.19209e-05, 100, 0, -100, 1.19209e-05, -7.83485, 3.08429, -2.05567)
+mesh = SubResource("ArrayMesh_pqxxi")
+skeleton = NodePath("")
+
+[node name="seats_006" type="MeshInstance3D" parent="train-haunted/1"]
+transform = Transform3D(3.07034, 0, 0, 0, -3.66013e-07, -3.07034, 0, 3.07034, -3.66013e-07, -8.06141, 1.92181, 10.2313)
+mesh = SubResource("ArrayMesh_euuqn")
+skeleton = NodePath("")
+
+[node name="Railing_V_006" type="MeshInstance3D" parent="train-haunted/1"]
+transform = Transform3D(-100, 0, 0, 0, 1.19209e-05, 100, 0, -100, 1.19209e-05, -7.78843, 3.26778, 10.2695)
+mesh = SubResource("ArrayMesh_imbtv")
+skeleton = NodePath("")
+
+[node name="seats_007" type="MeshInstance3D" parent="train-haunted/1"]
+transform = Transform3D(3.07034, 0, 0, 0, -3.66013e-07, -3.07034, 0, 3.07034, -3.66013e-07, -8.06141, 1.92181, 15.64)
+mesh = SubResource("ArrayMesh_0qqcc")
+skeleton = NodePath("")
+
+[node name="Railing_V_007" type="MeshInstance3D" parent="train-haunted/1"]
+transform = Transform3D(-100, 0, 0, 0, 1.19209e-05, 100, 0, -100, 1.19209e-05, -7.83485, 3.08429, 15.6455)
+mesh = SubResource("ArrayMesh_1hb7n")
+skeleton = NodePath("")
+
+[node name="Railing_V_008" type="MeshInstance3D" parent="train-haunted/1"]
+transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, -6.538, 4.23119, 10.6617)
+mesh = SubResource("ArrayMesh_dljp6")
+skeleton = NodePath("")
+
+[node name="Railing_V_009" type="MeshInstance3D" parent="train-haunted/1"]
+transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, -6.538, 4.23119, 2.9408)
+mesh = SubResource("ArrayMesh_csrfr")
+skeleton = NodePath("")
+
+[node name="Door" type="MeshInstance3D" parent="train-haunted/1"]
+transform = Transform3D(0, 73.4624, 2.98023e-06, 2.98023e-06, 0, 100, 100, 2.18935e-06, 0, -8.34263, 2.7449, -1.0266)
+mesh = SubResource("ArrayMesh_fw3rn")
+skeleton = NodePath("")
+
+[node name="Glass_001" type="MeshInstance3D" parent="train-haunted/1"]
+transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, -8.32506, 3.13835, -2.77403)
+mesh = SubResource("ArrayMesh_0c7xx")
+skeleton = NodePath("")
+
+[node name="Door_001" type="MeshInstance3D" parent="train-haunted/1"]
+transform = Transform3D(0, 73.4624, -2.98023e-06, 2.98023e-06, 0, 100, -100, 2.18935e-06, 0, -8.34263, 2.7449, 0.605652)
+mesh = SubResource("ArrayMesh_2bsye")
+skeleton = NodePath("")
+
+[node name="Door_002" type="MeshInstance3D" parent="train-haunted/1"]
+transform = Transform3D(0, 73.4624, 2.98023e-06, 2.98023e-06, 0, 100, 100, 2.18935e-06, 0, -8.34263, 2.7449, 5.9728)
+mesh = SubResource("ArrayMesh_xy6ce")
+skeleton = NodePath("")
+
+[node name="Door_003" type="MeshInstance3D" parent="train-haunted/1"]
+transform = Transform3D(0, 73.4624, -2.98023e-06, 2.98023e-06, 0, 100, -100, 2.18935e-06, 0, -8.34263, 2.7449, 7.60505)
+mesh = SubResource("ArrayMesh_3o2sq")
+skeleton = NodePath("")
+
+[node name="Door_004" type="MeshInstance3D" parent="train-haunted/1"]
+transform = Transform3D(0, 73.4624, 2.98023e-06, 2.98023e-06, 0, 100, 100, 2.18935e-06, 0, -8.34263, 2.7449, 12.9586)
+mesh = SubResource("ArrayMesh_7mqry")
+skeleton = NodePath("")
+
+[node name="Door_005" type="MeshInstance3D" parent="train-haunted/1"]
+transform = Transform3D(0, 73.4624, -2.98023e-06, 2.98023e-06, 0, 100, -100, 2.18935e-06, 0, -8.34263, 2.7449, 14.5908)
+mesh = SubResource("ArrayMesh_kwgd3")
+skeleton = NodePath("")
+
+[node name="Door_006" type="MeshInstance3D" parent="train-haunted/1"]
+transform = Transform3D(0, 73.4624, 2.98023e-06, 2.98023e-06, 0, 100, 100, 2.18935e-06, 0, -4.73182, 2.7449, -1.0266)
+mesh = SubResource("ArrayMesh_xcw4s")
+skeleton = NodePath("")
+
+[node name="Door_007" type="MeshInstance3D" parent="train-haunted/1"]
+transform = Transform3D(0, 73.4624, -2.98023e-06, 2.98023e-06, 0, 100, -100, 2.18935e-06, 0, -4.73182, 2.7449, 0.605652)
+mesh = SubResource("ArrayMesh_nl7r5")
+skeleton = NodePath("")
+
+[node name="Door_008" type="MeshInstance3D" parent="train-haunted/1"]
+transform = Transform3D(0, 73.4624, 2.98023e-06, 2.98023e-06, 0, 100, 100, 2.18935e-06, 0, -4.73182, 2.7449, 5.9728)
+mesh = SubResource("ArrayMesh_qp4d3")
+skeleton = NodePath("")
+
+[node name="Door_009" type="MeshInstance3D" parent="train-haunted/1"]
+transform = Transform3D(0, 73.4624, -2.98023e-06, 2.98023e-06, 0, 100, -100, 2.18935e-06, 0, -4.73182, 2.7449, 7.60505)
+mesh = SubResource("ArrayMesh_85cit")
+skeleton = NodePath("")
+
+[node name="Door_010" type="MeshInstance3D" parent="train-haunted/1"]
+transform = Transform3D(0, 73.4624, 2.98023e-06, 2.98023e-06, 0, 100, 100, 2.18935e-06, 0, -4.73182, 2.7449, 12.9586)
+mesh = SubResource("ArrayMesh_efiip")
+skeleton = NodePath("")
+
+[node name="Door_011" type="MeshInstance3D" parent="train-haunted/1"]
+transform = Transform3D(0, 73.4624, -2.98023e-06, 2.98023e-06, 0, 100, -100, 2.18935e-06, 0, -4.73182, 2.7449, 14.5908)
+mesh = SubResource("ArrayMesh_vmgxw")
+skeleton = NodePath("")
+
+[node name="Door_012" type="MeshInstance3D" parent="train-haunted/1"]
+transform = Transform3D(0, 73.4624, -2.98023e-06, 2.98023e-06, 0, 100, -100, 2.18935e-06, 0, -8.34263, 2.7449, 17.4084)
+mesh = SubResource("ArrayMesh_8gl30")
+skeleton = NodePath("")
+
+[node name="Door_013" type="MeshInstance3D" parent="train-haunted/1"]
+transform = Transform3D(0, 73.4624, -2.98023e-06, 2.98023e-06, 0, 100, -100, 2.18935e-06, 0, -4.73182, 2.7449, 17.4084)
+mesh = SubResource("ArrayMesh_81mpv")
+skeleton = NodePath("")
+
+[node name="Glass_002" type="MeshInstance3D" parent="train-haunted/1"]
+transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, -8.32506, 3.13835, 3.8418)
+mesh = SubResource("ArrayMesh_0c7ys")
+skeleton = NodePath("")
+
+[node name="Glass_003" type="MeshInstance3D" parent="train-haunted/1"]
+transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, -8.32506, 3.13835, 10.8289)
+mesh = SubResource("ArrayMesh_ag3vk")
+skeleton = NodePath("")
+
+[node name="Glass_004" type="MeshInstance3D" parent="train-haunted/1"]
+transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, -8.32506, 3.13835, 15.6385)
+mesh = SubResource("ArrayMesh_kgpvp")
+skeleton = NodePath("")
+
+[node name="Glass_005" type="MeshInstance3D" parent="train-haunted/1"]
+transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, -4.72714, 3.13835, -2.77403)
+mesh = SubResource("ArrayMesh_mk7js")
+skeleton = NodePath("")
+
+[node name="Glass_006" type="MeshInstance3D" parent="train-haunted/1"]
+transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, -4.72714, 3.13835, 3.8418)
+mesh = SubResource("ArrayMesh_122ja")
+skeleton = NodePath("")
+
+[node name="Glass_007" type="MeshInstance3D" parent="train-haunted/1"]
+transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, -4.72714, 3.13835, 10.8289)
+mesh = SubResource("ArrayMesh_ajemk")
+skeleton = NodePath("")
+
+[node name="Glass_012" type="MeshInstance3D" parent="train-haunted/1"]
+transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, -4.72714, 3.13835, 15.6385)
+mesh = SubResource("ArrayMesh_nbuix")
+skeleton = NodePath("")
+
+[node name="Door_014" type="MeshInstance3D" parent="train-haunted/1"]
+transform = Transform3D(100, 0, 0, 0, -8.75741e-06, 100, 0, -73.4624, -1.19209e-05, -6.91546, 2.7449, -4.72362)
+mesh = SubResource("ArrayMesh_4ppvf")
+skeleton = NodePath("")
+
+[node name="Door_015" type="MeshInstance3D" parent="train-haunted/1"]
+transform = Transform3D(100, 0, 0, 0, -8.75741e-06, 100, 0, -73.4624, -1.19209e-05, -6.91546, 2.7449, 18.3176)
+mesh = SubResource("ArrayMesh_k8txk")
+skeleton = NodePath("")
+
+[node name="Glass_008" type="MeshInstance3D" parent="train-haunted/1"]
+transform = Transform3D(0, -100, -2.98023e-06, -2.98023e-06, 0, 100, -100, 2.98023e-06, 0, -5.34771, 3.29759, 18.3341)
+mesh = SubResource("ArrayMesh_je7wk")
+skeleton = NodePath("")
+
+[node name="Glass_009" type="MeshInstance3D" parent="train-haunted/1"]
+transform = Transform3D(0, -100, -2.98023e-06, -2.98023e-06, 0, 100, -100, 2.98023e-06, 0, -7.72354, 3.29759, 18.3341)
+mesh = SubResource("ArrayMesh_3h0kb")
+skeleton = NodePath("")
+
+[node name="Glass_010" type="MeshInstance3D" parent="train-haunted/1"]
+transform = Transform3D(0, -100, -2.98023e-06, -2.98023e-06, 0, 100, -100, 2.98023e-06, 0, -5.34771, 3.29759, -4.71556)
+mesh = SubResource("ArrayMesh_eebdx")
+skeleton = NodePath("")
+
+[node name="Glass_011" type="MeshInstance3D" parent="train-haunted/1"]
+transform = Transform3D(0, -100, -2.98023e-06, -2.98023e-06, 0, 100, -100, 2.98023e-06, 0, -7.72354, 3.29759, -4.71556)
+mesh = SubResource("ArrayMesh_aj3nk")
+skeleton = NodePath("")
+
+[node name="2" type="Node3D" parent="train-haunted"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -23)
+
+[node name="subway_car" type="MeshInstance3D" parent="train-haunted/2"]
+transform = Transform3D(0, 187.451, 5.58648e-06, 5.58648e-06, 0, 187.451, 187.451, 5.58648e-06, 0, -6.538, 2.90095, 6.78997)
+mesh = SubResource("ArrayMesh_j1rrt")
+skeleton = NodePath("")
+
+[node name="seats" type="MeshInstance3D" parent="train-haunted/2"]
+transform = Transform3D(-3.07034, 0, 0, 0, 3.66013e-07, -3.07034, 0, 3.07034, 3.66013e-07, -5.01985, 1.92181, 3.25726)
+mesh = SubResource("ArrayMesh_r8j0n")
+skeleton = NodePath("")
+
+[node name="seats_001" type="MeshInstance3D" parent="train-haunted/2"]
+transform = Transform3D(-3.07034, 0, 0, 0, 3.66013e-07, -3.07034, 0, 3.07034, 3.66013e-07, -5.01985, 1.92181, -2.06119)
+mesh = SubResource("ArrayMesh_wwjb8")
+skeleton = NodePath("")
+
+[node name="Railing_V" type="MeshInstance3D" parent="train-haunted/2"]
+transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, -5.29283, 3.26778, 3.29545)
+mesh = SubResource("ArrayMesh_5c6yo")
+skeleton = NodePath("")
+
+[node name="Railing_V_001" type="MeshInstance3D" parent="train-haunted/2"]
+transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, -5.24641, 3.08429, -2.05567)
+mesh = SubResource("ArrayMesh_6i7oc")
+skeleton = NodePath("")
+
+[node name="seats_002" type="MeshInstance3D" parent="train-haunted/2"]
+transform = Transform3D(-3.07034, 0, 0, 0, 3.66013e-07, -3.07034, 0, 3.07034, 3.66013e-07, -5.01985, 1.92181, 10.2313)
+mesh = SubResource("ArrayMesh_but25")
+skeleton = NodePath("")
+
+[node name="Railing_V_002" type="MeshInstance3D" parent="train-haunted/2"]
+transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, -5.29283, 3.26778, 10.2695)
+mesh = SubResource("ArrayMesh_c85vi")
+skeleton = NodePath("")
+
+[node name="seats_003" type="MeshInstance3D" parent="train-haunted/2"]
+transform = Transform3D(-3.07034, 0, 0, 0, 3.66013e-07, -3.07034, 0, 3.07034, 3.66013e-07, -5.01985, 1.92181, 15.64)
+mesh = SubResource("ArrayMesh_xa1qy")
+skeleton = NodePath("")
+
+[node name="Railing_V_003" type="MeshInstance3D" parent="train-haunted/2"]
+transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, -5.24641, 3.08429, 15.6455)
+mesh = SubResource("ArrayMesh_3665b")
+skeleton = NodePath("")
+
+[node name="seats_004" type="MeshInstance3D" parent="train-haunted/2"]
+transform = Transform3D(3.07034, 0, 0, 0, -3.66013e-07, -3.07034, 0, 3.07034, -3.66013e-07, -8.06141, 1.92181, 3.25726)
+mesh = SubResource("ArrayMesh_h7lpy")
+skeleton = NodePath("")
+
+[node name="seats_005" type="MeshInstance3D" parent="train-haunted/2"]
+transform = Transform3D(3.07034, 0, 0, 0, -3.66013e-07, -3.07034, 0, 3.07034, -3.66013e-07, -8.06141, 1.92181, -2.06119)
+mesh = SubResource("ArrayMesh_yvai8")
+skeleton = NodePath("")
+
+[node name="Railing_V_004" type="MeshInstance3D" parent="train-haunted/2"]
+transform = Transform3D(-100, 0, 0, 0, 1.19209e-05, 100, 0, -100, 1.19209e-05, -7.78843, 3.26778, 3.29545)
+mesh = SubResource("ArrayMesh_pf6yc")
+skeleton = NodePath("")
+
+[node name="Railing_V_005" type="MeshInstance3D" parent="train-haunted/2"]
+transform = Transform3D(-100, 0, 0, 0, 1.19209e-05, 100, 0, -100, 1.19209e-05, -7.83485, 3.08429, -2.05567)
+mesh = SubResource("ArrayMesh_pqxxi")
+skeleton = NodePath("")
+
+[node name="seats_006" type="MeshInstance3D" parent="train-haunted/2"]
+transform = Transform3D(3.07034, 0, 0, 0, -3.66013e-07, -3.07034, 0, 3.07034, -3.66013e-07, -8.06141, 1.92181, 10.2313)
+mesh = SubResource("ArrayMesh_euuqn")
+skeleton = NodePath("")
+
+[node name="Railing_V_006" type="MeshInstance3D" parent="train-haunted/2"]
+transform = Transform3D(-100, 0, 0, 0, 1.19209e-05, 100, 0, -100, 1.19209e-05, -7.78843, 3.26778, 10.2695)
+mesh = SubResource("ArrayMesh_imbtv")
+skeleton = NodePath("")
+
+[node name="seats_007" type="MeshInstance3D" parent="train-haunted/2"]
+transform = Transform3D(3.07034, 0, 0, 0, -3.66013e-07, -3.07034, 0, 3.07034, -3.66013e-07, -8.06141, 1.92181, 15.64)
+mesh = SubResource("ArrayMesh_0qqcc")
+skeleton = NodePath("")
+
+[node name="Railing_V_007" type="MeshInstance3D" parent="train-haunted/2"]
+transform = Transform3D(-100, 0, 0, 0, 1.19209e-05, 100, 0, -100, 1.19209e-05, -7.83485, 3.08429, 15.6455)
+mesh = SubResource("ArrayMesh_1hb7n")
+skeleton = NodePath("")
+
+[node name="Railing_V_008" type="MeshInstance3D" parent="train-haunted/2"]
+transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, -6.538, 4.23119, 10.6617)
+mesh = SubResource("ArrayMesh_dljp6")
+skeleton = NodePath("")
+
+[node name="Railing_V_009" type="MeshInstance3D" parent="train-haunted/2"]
+transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, -6.538, 4.23119, 2.9408)
+mesh = SubResource("ArrayMesh_csrfr")
+skeleton = NodePath("")
+
+[node name="Door" type="MeshInstance3D" parent="train-haunted/2"]
+transform = Transform3D(0, 73.4624, 2.98023e-06, 2.98023e-06, 0, 100, 100, 2.18935e-06, 0, -8.34263, 2.7449, -1.0266)
+mesh = SubResource("ArrayMesh_fw3rn")
+skeleton = NodePath("")
+
+[node name="Glass_001" type="MeshInstance3D" parent="train-haunted/2"]
+transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, -8.32506, 3.13835, -2.77403)
+mesh = SubResource("ArrayMesh_0c7xx")
+skeleton = NodePath("")
+
+[node name="Door_001" type="MeshInstance3D" parent="train-haunted/2"]
+transform = Transform3D(0, 73.4624, -2.98023e-06, 2.98023e-06, 0, 100, -100, 2.18935e-06, 0, -8.34263, 2.7449, 0.605652)
+mesh = SubResource("ArrayMesh_2bsye")
+skeleton = NodePath("")
+
+[node name="Door_002" type="MeshInstance3D" parent="train-haunted/2"]
+transform = Transform3D(0, 73.4624, 2.98023e-06, 2.98023e-06, 0, 100, 100, 2.18935e-06, 0, -8.34263, 2.7449, 5.9728)
+mesh = SubResource("ArrayMesh_xy6ce")
+skeleton = NodePath("")
+
+[node name="Door_003" type="MeshInstance3D" parent="train-haunted/2"]
+transform = Transform3D(0, 73.4624, -2.98023e-06, 2.98023e-06, 0, 100, -100, 2.18935e-06, 0, -8.34263, 2.7449, 7.60505)
+mesh = SubResource("ArrayMesh_3o2sq")
+skeleton = NodePath("")
+
+[node name="Door_004" type="MeshInstance3D" parent="train-haunted/2"]
+transform = Transform3D(0, 73.4624, 2.98023e-06, 2.98023e-06, 0, 100, 100, 2.18935e-06, 0, -8.34263, 2.7449, 12.9586)
+mesh = SubResource("ArrayMesh_7mqry")
+skeleton = NodePath("")
+
+[node name="Door_005" type="MeshInstance3D" parent="train-haunted/2"]
+transform = Transform3D(0, 73.4624, -2.98023e-06, 2.98023e-06, 0, 100, -100, 2.18935e-06, 0, -8.34263, 2.7449, 14.5908)
+mesh = SubResource("ArrayMesh_kwgd3")
+skeleton = NodePath("")
+
+[node name="Door_006" type="MeshInstance3D" parent="train-haunted/2"]
+transform = Transform3D(0, 73.4624, 2.98023e-06, 2.98023e-06, 0, 100, 100, 2.18935e-06, 0, -4.73182, 2.7449, -1.0266)
+mesh = SubResource("ArrayMesh_xcw4s")
+skeleton = NodePath("")
+
+[node name="Door_007" type="MeshInstance3D" parent="train-haunted/2"]
+transform = Transform3D(0, 73.4624, -2.98023e-06, 2.98023e-06, 0, 100, -100, 2.18935e-06, 0, -4.73182, 2.7449, 0.605652)
+mesh = SubResource("ArrayMesh_nl7r5")
+skeleton = NodePath("")
+
+[node name="Door_008" type="MeshInstance3D" parent="train-haunted/2"]
+transform = Transform3D(0, 73.4624, 2.98023e-06, 2.98023e-06, 0, 100, 100, 2.18935e-06, 0, -4.73182, 2.7449, 5.9728)
+mesh = SubResource("ArrayMesh_qp4d3")
+skeleton = NodePath("")
+
+[node name="Door_009" type="MeshInstance3D" parent="train-haunted/2"]
+transform = Transform3D(0, 73.4624, -2.98023e-06, 2.98023e-06, 0, 100, -100, 2.18935e-06, 0, -4.73182, 2.7449, 7.60505)
+mesh = SubResource("ArrayMesh_85cit")
+skeleton = NodePath("")
+
+[node name="Door_010" type="MeshInstance3D" parent="train-haunted/2"]
+transform = Transform3D(0, 73.4624, 2.98023e-06, 2.98023e-06, 0, 100, 100, 2.18935e-06, 0, -4.73182, 2.7449, 12.9586)
+mesh = SubResource("ArrayMesh_efiip")
+skeleton = NodePath("")
+
+[node name="Door_011" type="MeshInstance3D" parent="train-haunted/2"]
+transform = Transform3D(0, 73.4624, -2.98023e-06, 2.98023e-06, 0, 100, -100, 2.18935e-06, 0, -4.73182, 2.7449, 14.5908)
+mesh = SubResource("ArrayMesh_vmgxw")
+skeleton = NodePath("")
+
+[node name="Door_012" type="MeshInstance3D" parent="train-haunted/2"]
+transform = Transform3D(0, 73.4624, -2.98023e-06, 2.98023e-06, 0, 100, -100, 2.18935e-06, 0, -8.34263, 2.7449, 17.4084)
+mesh = SubResource("ArrayMesh_8gl30")
+skeleton = NodePath("")
+
+[node name="Door_013" type="MeshInstance3D" parent="train-haunted/2"]
+transform = Transform3D(0, 73.4624, -2.98023e-06, 2.98023e-06, 0, 100, -100, 2.18935e-06, 0, -4.73182, 2.7449, 17.4084)
+mesh = SubResource("ArrayMesh_81mpv")
+skeleton = NodePath("")
+
+[node name="Glass_002" type="MeshInstance3D" parent="train-haunted/2"]
+transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, -8.32506, 3.13835, 3.8418)
+mesh = SubResource("ArrayMesh_0c7ys")
+skeleton = NodePath("")
+
+[node name="Glass_003" type="MeshInstance3D" parent="train-haunted/2"]
+transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, -8.32506, 3.13835, 10.8289)
+mesh = SubResource("ArrayMesh_ag3vk")
+skeleton = NodePath("")
+
+[node name="Glass_004" type="MeshInstance3D" parent="train-haunted/2"]
+transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, -8.32506, 3.13835, 15.6385)
+mesh = SubResource("ArrayMesh_kgpvp")
+skeleton = NodePath("")
+
+[node name="Glass_005" type="MeshInstance3D" parent="train-haunted/2"]
+transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, -4.72714, 3.13835, -2.77403)
+mesh = SubResource("ArrayMesh_mk7js")
+skeleton = NodePath("")
+
+[node name="Glass_006" type="MeshInstance3D" parent="train-haunted/2"]
+transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, -4.72714, 3.13835, 3.8418)
+mesh = SubResource("ArrayMesh_122ja")
+skeleton = NodePath("")
+
+[node name="Glass_007" type="MeshInstance3D" parent="train-haunted/2"]
+transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, -4.72714, 3.13835, 10.8289)
+mesh = SubResource("ArrayMesh_ajemk")
+skeleton = NodePath("")
+
+[node name="Glass_012" type="MeshInstance3D" parent="train-haunted/2"]
+transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, -4.72714, 3.13835, 15.6385)
+mesh = SubResource("ArrayMesh_nbuix")
+skeleton = NodePath("")
+
+[node name="Door_014" type="MeshInstance3D" parent="train-haunted/2"]
+transform = Transform3D(100, 0, 0, 0, -8.75741e-06, 100, 0, -73.4624, -1.19209e-05, -6.91546, 2.7449, -4.72362)
+mesh = SubResource("ArrayMesh_4ppvf")
+skeleton = NodePath("")
+
+[node name="Door_015" type="MeshInstance3D" parent="train-haunted/2"]
+transform = Transform3D(100, 0, 0, 0, -8.75741e-06, 100, 0, -73.4624, -1.19209e-05, -6.91546, 2.7449, 18.3176)
+mesh = SubResource("ArrayMesh_k8txk")
+skeleton = NodePath("")
+
+[node name="Glass_008" type="MeshInstance3D" parent="train-haunted/2"]
+transform = Transform3D(0, -100, -2.98023e-06, -2.98023e-06, 0, 100, -100, 2.98023e-06, 0, -5.34771, 3.29759, 18.3341)
+mesh = SubResource("ArrayMesh_je7wk")
+skeleton = NodePath("")
+
+[node name="Glass_009" type="MeshInstance3D" parent="train-haunted/2"]
+transform = Transform3D(0, -100, -2.98023e-06, -2.98023e-06, 0, 100, -100, 2.98023e-06, 0, -7.72354, 3.29759, 18.3341)
+mesh = SubResource("ArrayMesh_3h0kb")
+skeleton = NodePath("")
+
+[node name="Glass_010" type="MeshInstance3D" parent="train-haunted/2"]
+transform = Transform3D(0, -100, -2.98023e-06, -2.98023e-06, 0, 100, -100, 2.98023e-06, 0, -5.34771, 3.29759, -4.71556)
+mesh = SubResource("ArrayMesh_eebdx")
+skeleton = NodePath("")
+
+[node name="Glass_011" type="MeshInstance3D" parent="train-haunted/2"]
+transform = Transform3D(0, -100, -2.98023e-06, -2.98023e-06, 0, 100, -100, 2.98023e-06, 0, -7.72354, 3.29759, -4.71556)
+mesh = SubResource("ArrayMesh_aj3nk")
+skeleton = NodePath("")
+
+[node name="Area3D" type="Area3D" parent="train-haunted" groups=["train"]]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="train-haunted/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.5, 4, -6)
+shape = SubResource("BoxShape3D_72a88")
 
 [connection signal="area_entered" from="train_stopper" to="." method="_on_train_stopper_area_entered"]
+[connection signal="body_entered" from="train_stopper" to="." method="_on_train_stopper_body_entered"]

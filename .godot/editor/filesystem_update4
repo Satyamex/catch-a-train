@@ -5,6 +5,7 @@ res://game_scenes/map.tscn
 res://game_scenes/main_menu.tscn
 res://game_scenes/day0.tscn
 res://prefabs/train.tscn
-res://scripts/day_0.gd
 res://game_scenes/day1.tscn
+res://scripts/train.gd
+res://scripts/day_0.gd
 res://scripts/day_1.gd
