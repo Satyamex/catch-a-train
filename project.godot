@@ -26,6 +26,11 @@ window/size/viewport_height=480
 window/stretch/mode="viewport"
 window/vsync/vsync_mode=0
 
+[editor]
+
+movie_writer/movie_file="C:/Users/Gallery/Desktop/projects/catch-a-train/vid.avi"
+movie_writer/disable_vsync=true
+
 [global_group]
 
 man=""
