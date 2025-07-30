@@ -56,7 +56,7 @@ func _ready() -> void:
 	train_passby_2.hide()
 	train_haunted.show()
 	train_haunted.can_move = true
-	await get_tree().create_timer(6.0).timeout
+	await get_tree().create_timer(20.0).timeout
 	train_haunted.can_move = true
 	haunted_train_passed = true
 	await get_tree().create_timer(5.0).timeout
