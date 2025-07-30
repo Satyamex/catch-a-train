@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://k7uo28q4cyn7"
 path.s3tc="res://.godot/imported/Vending_machine.png-1bcb8bd42a3040c2baed10fe3ce1a936.s3tc.ctex"
+path.etc2="res://.godot/imported/Vending_machine.png-1bcb8bd42a3040c2baed10fe3ce1a936.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/Metro_PSX/Textures/Vending_machine.png"
-dest_files=["res://.godot/imported/Vending_machine.png-1bcb8bd42a3040c2baed10fe3ce1a936.s3tc.ctex"]
+dest_files=["res://.godot/imported/Vending_machine.png-1bcb8bd42a3040c2baed10fe3ce1a936.s3tc.ctex", "res://.godot/imported/Vending_machine.png-1bcb8bd42a3040c2baed10fe3ce1a936.etc2.ctex"]
 
 [params]
 

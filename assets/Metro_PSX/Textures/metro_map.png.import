@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://biuy5rxur77u2"
 path.s3tc="res://.godot/imported/metro_map.png-b0949c261cc14416ef97ac0ce79015ec.s3tc.ctex"
+path.etc2="res://.godot/imported/metro_map.png-b0949c261cc14416ef97ac0ce79015ec.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/Metro_PSX/Textures/metro_map.png"
-dest_files=["res://.godot/imported/metro_map.png-b0949c261cc14416ef97ac0ce79015ec.s3tc.ctex"]
+dest_files=["res://.godot/imported/metro_map.png-b0949c261cc14416ef97ac0ce79015ec.s3tc.ctex", "res://.godot/imported/metro_map.png-b0949c261cc14416ef97ac0ce79015ec.etc2.ctex"]
 
 [params]
 

@@ -22,6 +22,7 @@ extends Node3D
 @onready var player_crosshair2: TextureRect = $player/cam_anchor/cam/UI/crosshair2
 
 const LOOSE_SCREEN = preload("res://game_scenes/death.tscn")
+const DEATH_2 = preload("res://game_scenes/death2.tscn")
 const WIN_SCREEN = preload("res://game_scenes/main_menu.tscn")
 var interacted_train: bool = false
 var haunted_train_passed: bool = false
@@ -80,6 +81,11 @@ func _ready() -> void:
 	light_7.show()
 	train_winning.show()
 	train_winning.can_move = true
+	await get_tree().create_timer(14.0).timeout
+	train_winning.can_move = true
+	await get_tree().create_timer(10.0).timeout
+	player.game_paused = true
+	get_tree().change_scene_to_packed(DEATH_2)
 
 func _on_train_stopper_area_entered(area: Area3D) -> void:
 	var train = area.get_parent()

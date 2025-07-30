@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://dvhu16lrn57wa"
 path.s3tc="res://.godot/imported/light.png-a4d2bced869cc9df2c62e29bf8480fff.s3tc.ctex"
+path.etc2="res://.godot/imported/light.png-a4d2bced869cc9df2c62e29bf8480fff.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/Metro_PSX/Textures/light.png"
-dest_files=["res://.godot/imported/light.png-a4d2bced869cc9df2c62e29bf8480fff.s3tc.ctex"]
+dest_files=["res://.godot/imported/light.png-a4d2bced869cc9df2c62e29bf8480fff.s3tc.ctex", "res://.godot/imported/light.png-a4d2bced869cc9df2c62e29bf8480fff.etc2.ctex"]
 
 [params]
 

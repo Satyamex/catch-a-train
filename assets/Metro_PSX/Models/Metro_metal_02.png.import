@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://bfjek6qldj0q5"
 path.s3tc="res://.godot/imported/Metro_metal_02.png-e131783e8cc0d8b273ef8180b87e34ee.s3tc.ctex"
+path.etc2="res://.godot/imported/Metro_metal_02.png-e131783e8cc0d8b273ef8180b87e34ee.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/Metro_PSX/Models/Metro_metal_02.png"
-dest_files=["res://.godot/imported/Metro_metal_02.png-e131783e8cc0d8b273ef8180b87e34ee.s3tc.ctex"]
+dest_files=["res://.godot/imported/Metro_metal_02.png-e131783e8cc0d8b273ef8180b87e34ee.s3tc.ctex", "res://.godot/imported/Metro_metal_02.png-e131783e8cc0d8b273ef8180b87e34ee.etc2.ctex"]
 
 [params]
 

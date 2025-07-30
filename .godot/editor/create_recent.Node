@@ -1,6 +1,6 @@
-ColorRect
-AnimationPlayer
 Camera3D
+AnimationPlayer
+ColorRect
 OmniLight3D
 Label
 Area3D

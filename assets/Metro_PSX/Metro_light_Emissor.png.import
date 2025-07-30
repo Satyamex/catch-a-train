@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://b8hohgr7jjej1"
 path.s3tc="res://.godot/imported/Metro_light_Emissor.png-59dbb50c122d7d46c056ae7a8e858dc7.s3tc.ctex"
+path.etc2="res://.godot/imported/Metro_light_Emissor.png-59dbb50c122d7d46c056ae7a8e858dc7.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/Metro_PSX/Metro_light_Emissor.png"
-dest_files=["res://.godot/imported/Metro_light_Emissor.png-59dbb50c122d7d46c056ae7a8e858dc7.s3tc.ctex"]
+dest_files=["res://.godot/imported/Metro_light_Emissor.png-59dbb50c122d7d46c056ae7a8e858dc7.s3tc.ctex", "res://.godot/imported/Metro_light_Emissor.png-59dbb50c122d7d46c056ae7a8e858dc7.etc2.ctex"]
 
 [params]
 

@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://bvu7vxwan4b17"
 path.s3tc="res://.godot/imported/TactilePaving.png-bbc37e88405e70e3b657bb9331e90800.s3tc.ctex"
+path.etc2="res://.godot/imported/TactilePaving.png-bbc37e88405e70e3b657bb9331e90800.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/Metro_PSX/Textures/TactilePaving.png"
-dest_files=["res://.godot/imported/TactilePaving.png-bbc37e88405e70e3b657bb9331e90800.s3tc.ctex"]
+dest_files=["res://.godot/imported/TactilePaving.png-bbc37e88405e70e3b657bb9331e90800.s3tc.ctex", "res://.godot/imported/TactilePaving.png-bbc37e88405e70e3b657bb9331e90800.etc2.ctex"]
 
 [params]
 

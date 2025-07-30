@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://cqdu31wknp0aw"
 path.s3tc="res://.godot/imported/trash_can.png-591a5f9e337b99c11206d43f597745e2.s3tc.ctex"
+path.etc2="res://.godot/imported/trash_can.png-591a5f9e337b99c11206d43f597745e2.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/Metro_PSX/Textures/trash_can.png"
-dest_files=["res://.godot/imported/trash_can.png-591a5f9e337b99c11206d43f597745e2.s3tc.ctex"]
+dest_files=["res://.godot/imported/trash_can.png-591a5f9e337b99c11206d43f597745e2.s3tc.ctex", "res://.godot/imported/trash_can.png-591a5f9e337b99c11206d43f597745e2.etc2.ctex"]
 
 [params]
 

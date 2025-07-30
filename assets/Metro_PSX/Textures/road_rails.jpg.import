@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://rkqft74kx03t"
 path.s3tc="res://.godot/imported/road_rails.jpg-7333eeb9d5c0dd23cdf6e196b39e2c2b.s3tc.ctex"
+path.etc2="res://.godot/imported/road_rails.jpg-7333eeb9d5c0dd23cdf6e196b39e2c2b.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/Metro_PSX/Textures/road_rails.jpg"
-dest_files=["res://.godot/imported/road_rails.jpg-7333eeb9d5c0dd23cdf6e196b39e2c2b.s3tc.ctex"]
+dest_files=["res://.godot/imported/road_rails.jpg-7333eeb9d5c0dd23cdf6e196b39e2c2b.s3tc.ctex", "res://.godot/imported/road_rails.jpg-7333eeb9d5c0dd23cdf6e196b39e2c2b.etc2.ctex"]
 
 [params]
 

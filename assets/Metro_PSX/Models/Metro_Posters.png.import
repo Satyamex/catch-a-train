@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://blplov8onn876"
 path.s3tc="res://.godot/imported/Metro_Posters.png-5de6b9e3ac039a12961a51acd73a7f52.s3tc.ctex"
+path.etc2="res://.godot/imported/Metro_Posters.png-5de6b9e3ac039a12961a51acd73a7f52.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/Metro_PSX/Models/Metro_Posters.png"
-dest_files=["res://.godot/imported/Metro_Posters.png-5de6b9e3ac039a12961a51acd73a7f52.s3tc.ctex"]
+dest_files=["res://.godot/imported/Metro_Posters.png-5de6b9e3ac039a12961a51acd73a7f52.s3tc.ctex", "res://.godot/imported/Metro_Posters.png-5de6b9e3ac039a12961a51acd73a7f52.etc2.ctex"]
 
 [params]
 
