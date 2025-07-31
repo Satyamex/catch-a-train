@@ -303,6 +303,21 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_n0e7y")
 
+[sub_resource type="Animation" id="Animation_et817"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1.26072, -1.5708, 0)]
+}
+
 [sub_resource type="Animation" id="Animation_68dqc"]
 resource_name = "fling"
 length = 5.0
@@ -317,21 +332,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Vector3(1.26072, -1.5708, 0), Vector3(1.49156, -1.5708, 3.36623e-14), Vector3(1.26072, -1.5708, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_et817"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(1.26072, -1.5708, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_xpwlc"]
@@ -3775,7 +3775,7 @@ light_bake_mode = 1
 omni_range = 74.264
 
 [node name="light8" type="MeshInstance3D" parent="map"]
-transform = Transform3D(-8.74228e-08, -1.90462, -0.61026, 0, 0.61026, -1.90462, 2, -8.32536e-08, -2.66753e-08, -88.9681, 11.2837, 14.8)
+transform = Transform3D(-7.23998e-06, -1.90462, -0.610262, 0, 0.610262, -1.90462, 2, -6.8947e-06, -2.20914e-06, -88.9681, 11.2837, 14.8)
 visible = false
 mesh = SubResource("ArrayMesh_pv504")
 skeleton = NodePath("")
@@ -5990,7 +5990,7 @@ bones/2/parent = 1
 bones/2/rest = Transform3D(1, 0, 0, 0, 1, 6.60343e-08, 0, -6.60343e-08, 1, 0, 0.279892, 0)
 bones/2/enabled = true
 bones/2/position = Vector3(0, 0.279892, 0)
-bones/2/rotation = Quaternion(0.24042, -0.0283119, -0.000940223, 0.970256)
+bones/2/rotation = Quaternion(0.24042, -0.0283119, -0.000940223, 0.970255)
 bones/2/scale = Vector3(1, 1, 1)
 bones/3/name = "mixamorig_Spine2"
 bones/3/parent = 2
@@ -6004,7 +6004,7 @@ bones/4/parent = 3
 bones/4/rest = Transform3D(1, 0, 0, 0, 0.99803, -0.0627391, 0, 0.0627391, 0.99803, 0, 0.359861, 1.96999e-08)
 bones/4/enabled = true
 bones/4/position = Vector3(0, 0.359861, 1.96999e-08)
-bones/4/rotation = Quaternion(0.0958073, 0.000981025, 0.0122953, 0.995324)
+bones/4/rotation = Quaternion(0.0958073, 0.000981026, 0.0122953, 0.995324)
 bones/4/scale = Vector3(1, 1, 1)
 bones/5/name = "mixamorig_Head"
 bones/5/parent = 4
@@ -6032,7 +6032,7 @@ bones/8/parent = 7
 bones/8/rest = Transform3D(0.993198, 0.0616073, 0.0988078, 0, 0.848568, -0.529087, -0.116441, 0.525488, 0.842795, -2.77556e-17, 0.298161, -4.44089e-16)
 bones/8/enabled = true
 bones/8/position = Vector3(-1.77636e-17, 0.298161, 0)
-bones/8/rotation = Quaternion(0.375129, -0.00109468, 0.245329, 0.893919)
+bones/8/rotation = Quaternion(0.375129, -0.00109469, 0.245329, 0.893919)
 bones/8/scale = Vector3(1, 1, 1)
 bones/9/name = "mixamorig_LeftForeArm"
 bones/9/parent = 8
@@ -6095,14 +6095,14 @@ bones/17/parent = 16
 bones/17/rest = Transform3D(0.998169, -0.0496529, -0.0345328, 0, 0.570971, -0.82097, 0.0604808, 0.819467, 0.569926, -2.22045e-16, 0.887746, 0)
 bones/17/enabled = true
 bones/17/position = Vector3(0, 0.887746, 3.55271e-17)
-bones/17/rotation = Quaternion(0.517609, 0.044131, 0.143379, 0.842364)
+bones/17/rotation = Quaternion(0.517609, 0.044131, 0.143379, 0.842363)
 bones/17/scale = Vector3(1, 1, 1)
 bones/18/name = "mixamorig_LeftToeBase"
 bones/18/parent = 17
 bones/18/rest = Transform3D(0.999015, -0.0256613, -0.0361892, 9.31323e-10, 0.815735, -0.578426, 0.044364, 0.577857, 0.814931, 3.33067e-16, 0.382672, -4.94396e-17)
 bones/18/enabled = true
 bones/18/position = Vector3(0, 0.382672, 1.77636e-17)
-bones/18/rotation = Quaternion(0.247145, -0.0146651, -0.00280295, 0.968863)
+bones/18/rotation = Quaternion(0.247145, -0.0146651, -0.00280294, 0.968863)
 bones/18/scale = Vector3(1, 1, 1)
 bones/19/name = "mixamorig_LeftToe_End"
 bones/19/parent = 18
@@ -6123,7 +6123,7 @@ bones/21/parent = 20
 bones/21/rest = Transform3D(0.999964, -0.00850392, 0.000683324, 0.00853133, 0.996751, -0.0800929, 0, 0.0800959, 0.996787, 0, 1.08587, 5.55112e-17)
 bones/21/enabled = true
 bones/21/position = Vector3(0, 1.08587, -3.55271e-17)
-bones/21/rotation = Quaternion(-0.169085, -0.0940045, -0.0441227, 0.980116)
+bones/21/rotation = Quaternion(-0.169084, -0.0940045, -0.0441227, 0.980116)
 bones/21/scale = Vector3(1, 1, 1)
 bones/22/name = "mixamorig_RightFoot"
 bones/22/parent = 21
@@ -6137,7 +6137,7 @@ bones/23/parent = 22
 bones/23/rest = Transform3D(0.999081, 0.0248641, 0.0349271, 0, 0.814657, -0.579943, -0.0428734, 0.57941, 0.813908, -1.11022e-16, 0.381849, 2.60209e-17)
 bones/23/enabled = true
 bones/23/position = Vector3(1.42109e-16, 0.381849, 5.32907e-17)
-bones/23/rotation = Quaternion(0.392728, 0.0307009, -0.0218921, 0.918882)
+bones/23/rotation = Quaternion(0.392728, 0.0307009, -0.0218921, 0.918881)
 bones/23/scale = Vector3(1, 1, 1)
 bones/24/name = "mixamorig_RightToe_End"
 bones/24/parent = 23
@@ -6163,13 +6163,13 @@ visible = false
 [node name="demon_eye" type="MeshInstance3D" parent="demon_eyes"]
 material_override = SubResource("StandardMaterial3D_68dqc")
 mesh = SubResource("SphereMesh_et817")
-skeleton = NodePath("../../root/@EditorNode@21272/@Panel@14/@VBoxContainer@15/DockHSplitLeftL/DockHSplitLeftR/DockHSplitMain/@VBoxContainer@26/DockVSplitCenter/@VSplitContainer@54/@VBoxContainer@55/@EditorMainScreen@102/MainScreen/@CanvasItemEditor@11482/@VSplitContainer@11134/@HSplitContainer@11136/@HSplitContainer@11138/@Control@11139/@SubViewportContainer@11140/@SubViewport@11141/map")
+skeleton = NodePath("../../..")
 
 [node name="demon_eye2" type="MeshInstance3D" parent="demon_eyes"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.78922, 0, 0.608917)
 material_override = SubResource("StandardMaterial3D_68dqc")
 mesh = SubResource("SphereMesh_et817")
-skeleton = NodePath("../../root/@EditorNode@21272/@Panel@14/@VBoxContainer@15/DockHSplitLeftL/DockHSplitLeftR/DockHSplitMain/@VBoxContainer@26/DockVSplitCenter/@VSplitContainer@54/@VBoxContainer@55/@EditorMainScreen@102/MainScreen/@CanvasItemEditor@11482/@VSplitContainer@11134/@HSplitContainer@11136/@HSplitContainer@11138/@Control@11139/@SubViewportContainer@11140/@SubViewport@11141/map")
+skeleton = NodePath("../../..")
 
 [connection signal="animation_finished" from="map/light8/AnimationPlayer" to="." method="_on_light_animation_player_animation_finished"]
 [connection signal="area_entered" from="train_stopper" to="." method="_on_train_stopper_area_entered"]
