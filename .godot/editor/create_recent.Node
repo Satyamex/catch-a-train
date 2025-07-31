@@ -1,14 +1,14 @@
+Node3D
+MeshInstance3D
+AnimationPlayer
 OccluderInstance3D
 Camera3D
-AnimationPlayer
 ColorRect
 OmniLight3D
 Label
 Area3D
 AnimatableBody3D
 CollisionShape3D
-Node3D
 CanvasLayer
 Control
 TextureRect
-RayCast3D

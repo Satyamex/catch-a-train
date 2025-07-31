@@ -8,3 +8,7 @@ res://prefabs/train.tscn
 res://game_scenes/day1.tscn
 res://game_scenes/death.tscn
 res://game_scenes/death2.tscn
+res://scripts/day_0.gd
+res://scripts/day_1.gd
+res://scripts/day_2.gd
+res://game_scenes/day2.tscn
