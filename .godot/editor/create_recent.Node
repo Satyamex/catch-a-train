@@ -1,5 +1,6 @@
-Node3D
 MeshInstance3D
+Decal
+Node3D
 AnimationPlayer
 OccluderInstance3D
 Camera3D
@@ -11,4 +12,3 @@ AnimatableBody3D
 CollisionShape3D
 CanvasLayer
 Control
-TextureRect

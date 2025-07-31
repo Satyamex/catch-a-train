@@ -1,14 +1,4 @@
 res://game_scenes/day3.tscn
 res://retro.gdshader
-res://game_scenes/stage.tscn
-res://prefabs/player.tscn
-res://game_scenes/map.tscn
-res://game_scenes/main_menu.tscn
-res://game_scenes/day0.tscn
-res://prefabs/train.tscn
-res://game_scenes/day1.tscn
-res://game_scenes/death.tscn
-res://game_scenes/death2.tscn
-res://game_scenes/day2.tscn
 res://scripts/day_3.gd
-res://scripts/day_1.gd
+res://scripts/save.json

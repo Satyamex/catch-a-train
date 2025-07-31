@@ -6094,3 +6094,5 @@ skin = SubResource("Skin_rfbgk")
 libraries = {
 &"": SubResource("AnimationLibrary_8ms53")
 }
+
+[connection signal="area_entered" from="train_stopper" to="." method="_on_train_stopper_area_entered"]

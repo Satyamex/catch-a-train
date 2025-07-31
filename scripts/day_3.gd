@@ -19,6 +19,28 @@ func _ready() -> void:
 	await get_tree().create_timer(5.0).timeout
 	train_passby_2.show()
 	train_passby_2.can_move = true
+	await get_tree().create_timer(10.0).timeout
+	light.hide()
+	light_2.hide()
+	light_3.hide()
+	light_4.hide()
+	light_6.hide()
+	light_7.hide()
+	train_passby_2.hide()
+	await get_tree().create_timer(3.0).timeout
+	light.show()
+	light_2.show()
+	light_3.show()
+	light_4.show()
+	light_6.show()
+	light_7.show()
+	await get_tree().create_timer(5.0).timeout
+	train_haunted.show()
+	train_haunted.can_move = true
 
 func _process(delta: float) -> void:
 	pass
+
+func _on_train_stopper_area_entered(area: Area3D) -> void:
+	if area.is_in_group("train"):
+		train_haunted.can_move = false
