@@ -1,3 +1,4 @@
+OccluderInstance3D
 Camera3D
 AnimationPlayer
 ColorRect
@@ -11,4 +12,3 @@ CanvasLayer
 Control
 TextureRect
 RayCast3D
-MeshInstance3D

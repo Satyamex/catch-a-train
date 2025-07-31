@@ -3,7 +3,7 @@ extends CharacterBody3D
 @onready var cam_anchor: Node3D = $cam_anchor
 @onready var cam: Camera3D = $cam_anchor/cam
 
-var cam_sens: float = 0.003
+var cam_sens: float = 0.0025
 var game_paused: bool = false
 var jump_velocity: float
 var current_speed: float = 7.0

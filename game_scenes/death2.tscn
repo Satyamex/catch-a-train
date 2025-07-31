@@ -3292,7 +3292,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [true]
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_8v0dy"]
@@ -3359,7 +3359,8 @@ script = ExtResource("1_xmmsn")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.989526, 0.0890729, -0.113599, 0, 0.786935, 0.617036, 0.144356, 0.610573, -0.778692, 0, 0, 0)
 light_energy = 0.05
-shadow_enabled = true
+light_bake_mode = 1
+directional_shadow_mode = 0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_ys6ps")
@@ -4138,6 +4139,7 @@ libraries = {
 }
 
 [node name="day_text" type="Label" parent="."]
+visible = false
 anchors_preset = -1
 anchor_left = 0.266
 anchor_top = 0.896

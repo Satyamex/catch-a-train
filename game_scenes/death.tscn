@@ -188,7 +188,9 @@ script = ExtResource("1_6kimk")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.989526, 0.0890729, -0.113599, 0, 0.786935, 0.617036, 0.144356, 0.610573, -0.778692, 0, 0, 0)
 light_energy = 0.05
+light_bake_mode = 1
 shadow_enabled = true
+directional_shadow_mode = 0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_6kimk")
