@@ -1,6 +1,6 @@
 extends Node3D
 
-const MAIN_MENU = preload("res://game_scenes/main_menu.tscn")
+var MAIN_MENU = load("res://game_scenes/main_menu.tscn")
 
 @onready var cutscene: AnimationPlayer = $cutscene
 

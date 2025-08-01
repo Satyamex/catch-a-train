@@ -15,9 +15,9 @@ extends Node3D
 @onready var player_tip_text: Label = $player/cam_anchor/cam/UI/tip
 @onready var player_crosshair2: TextureRect = $player/cam_anchor/cam/UI/crosshair2
 
-const DEATH_2 = preload("res://game_scenes/death2.tscn")
-const DEATH = preload("res://game_scenes/death.tscn")
-const DAY4 = preload("res://game_scenes/day4.tscn")
+var DEATH_2 = load("res://game_scenes/death2.tscn")
+var DEATH = load("res://game_scenes/death.tscn")
+var DAY4 = load("res://game_scenes/day4.tscn")
 
 var htrain: bool = true
 
@@ -71,7 +71,9 @@ func _ready() -> void:
 	await get_tree().create_timer(6.0).timeout
 	train_winning.show()
 	train_winning.can_move = true
-	await get_tree().create_timer(9.0).timeout
+	await get_tree().create_timer(15.0).timeout
+	train_winning.can_move = true
+	await get_tree().create_timer(15.0).timeout
 	get_tree().change_scene_to_packed(DEATH_2)
 
 func _process(delta: float) -> void:

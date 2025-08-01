@@ -21,9 +21,9 @@ extends Node3D
 @onready var player: CharacterBody3D = $player
 @onready var player_crosshair2: TextureRect = $player/cam_anchor/cam/UI/crosshair2
 
-const LOOSE_SCREEN = preload("res://game_scenes/death.tscn")
-const DEATH_2 = preload("res://game_scenes/death2.tscn")
-const WIN_SCREEN = preload("res://game_scenes/main_menu.tscn")
+var LOOSE_SCREEN = load("res://game_scenes/death.tscn")
+var DEATH_2 = load("res://game_scenes/death2.tscn")
+var WIN_SCREEN = load("res://game_scenes/day2.tscn")
 
 var interacted_train: bool = false
 var haunted_train_passed: bool = false

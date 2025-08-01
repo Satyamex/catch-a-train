@@ -18,9 +18,9 @@ extends Node3D
 @onready var player_crosshair2: TextureRect = $player/cam_anchor/cam/UI/crosshair2
 @onready var demon_eyes: Node3D = $demon_eyes
 
-const DEATH = preload("res://game_scenes/death.tscn")
-const DEATH_2 = preload("res://game_scenes/death2.tscn")
-const DAY3 = preload("res://game_scenes/main_menu.tscn")
+var DEATH = load("res://game_scenes/death.tscn")
+var DEATH_2 = load("res://game_scenes/death2.tscn")
+var DAY3 = load("res://game_scenes/day3.tscn")
 
 var htrain: bool = true
 var htrain2: bool = true

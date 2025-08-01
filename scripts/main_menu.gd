@@ -10,7 +10,7 @@ extends Node3D
 @onready var light_3: MeshInstance3D = $map/light3
 @onready var light_4: MeshInstance3D = $map/light4
 
-const DAY_0 = preload("res://game_scenes/day0.tscn")
+var DAY_0 = load("res://game_scenes/day0.tscn")
 
 func _ready():
 	light_timer_1.timeout.connect(_on_light_timer_1_timeout)

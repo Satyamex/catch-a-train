@@ -17,9 +17,9 @@ extends Node3D
 @onready var player_tip_text: Label = $player/cam_anchor/cam/UI/tip
 @onready var player_crosshair2: TextureRect = $player/cam_anchor/cam/UI/crosshair2
 
-const DEATH_2 = preload("res://game_scenes/death2.tscn")
-const DEATH = preload("res://game_scenes/death.tscn")
-const DAY5 = preload("res://game_scenes/main_menu.tscn")
+var DEATH_2 = load("res://game_scenes/death2.tscn")
+var DEATH = load("res://game_scenes/death.tscn")
+var DAY5 = load("res://game_scenes/main_menu.tscn")
 
 var haunted_trains_passed: bool = false
 

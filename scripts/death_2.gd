@@ -1,6 +1,6 @@
 extends Node3D
 
-const DAY2 = preload("res://game_scenes/main_menu.tscn")
+var DAY2 = load("res://game_scenes/main_menu.tscn")
 
 @onready var cutscene: AnimationPlayer = $cutscene
 
