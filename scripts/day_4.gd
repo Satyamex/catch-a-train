@@ -19,7 +19,7 @@ extends Node3D
 
 var DEATH_2 = load("res://game_scenes/death2.tscn")
 var DEATH = load("res://game_scenes/death.tscn")
-var DAY5 = load("res://game_scenes/main_menu.tscn")
+var DAY5 = load("res://game_scenes/day5.tscn")
 
 var haunted_trains_passed: bool = false
 

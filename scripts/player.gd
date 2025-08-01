@@ -2,7 +2,6 @@ extends CharacterBody3D
 
 @onready var cam_anchor: Node3D = $cam_anchor
 @onready var cam: Camera3D = $cam_anchor/cam
-
 var cam_sens: float = 0.0025
 var game_paused: bool = false
 var jump_velocity: float
@@ -11,6 +10,7 @@ var acceleration: float = 100.0
 var deceleration: float = 10.0
 var can_look: bool = true
 var can_move: bool = true
+var moving: bool = false
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
@@ -32,9 +32,11 @@ func _physics_process(delta: float) -> void:
 	var input_dir: Vector2 = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
 	var direction: Vector3 = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	if direction != Vector3.ZERO and can_move:
+		moving = true
 		velocity.x = lerpf(velocity.x, direction.x * current_speed, acceleration * delta)
 		velocity.z = lerpf(velocity.z, direction.z * current_speed, acceleration * delta)
 	else:
+		moving = false
 		velocity.x = lerpf(velocity.x, 0.0, deceleration * delta)
 		velocity.z = lerpf(velocity.z, 0.0, deceleration * delta)
 	move_and_slide()

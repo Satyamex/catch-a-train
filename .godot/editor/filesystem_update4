@@ -1,8 +1,8 @@
-res://game_scenes/stage.tscn
+res://game_scenes/main_menu.tscn
 res://retro.gdshader
+res://game_scenes/stage.tscn
 res://prefabs/player.tscn
 res://game_scenes/map.tscn
-res://game_scenes/main_menu.tscn
 res://game_scenes/day0.tscn
 res://prefabs/train.tscn
 res://game_scenes/day1.tscn
@@ -11,4 +11,14 @@ res://game_scenes/death2.tscn
 res://game_scenes/day2.tscn
 res://game_scenes/day3.tscn
 res://game_scenes/day4.tscn
+res://scripts/main_menu.gd
+res://scripts/day_0.gd
+res://scripts/day_1.gd
+res://scripts/day_2.gd
 res://scripts/day_3.gd
+res://scripts/day_4.gd
+res://scripts/player.gd
+res://game_scenes/global.tscn
+res://scripts/global.gd
+res://game_scenes/day5.tscn
+res://scripts/day_5.gd

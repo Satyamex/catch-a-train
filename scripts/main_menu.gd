@@ -9,10 +9,14 @@ extends Node3D
 @onready var man_anim: AnimationPlayer = $map/man/AnimationPlayer
 @onready var light_3: MeshInstance3D = $map/light3
 @onready var light_4: MeshInstance3D = $map/light4
+@onready var main_menu_audio: AudioStreamPlayer = $main_menu_audio
 
 var DAY_0 = load("res://game_scenes/day0.tscn")
+const MAIN_MENU_s = preload("res://sounds/main_menu.wav")
 
 func _ready():
+	main_menu_audio.stream = MAIN_MENU_s
+	main_menu_audio.play()
 	light_timer_1.timeout.connect(_on_light_timer_1_timeout)
 	light_timer_2.timeout.connect(_on_light_timer_2_timeout)
 	light_timer_1.start()

@@ -24,7 +24,6 @@ extends Node3D
 var LOOSE_SCREEN = load("res://game_scenes/death.tscn")
 var DEATH_2 = load("res://game_scenes/death2.tscn")
 var WIN_SCREEN = load("res://game_scenes/day2.tscn")
-
 var interacted_train: bool = false
 var haunted_train_passed: bool = false
 
