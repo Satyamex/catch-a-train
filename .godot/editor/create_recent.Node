@@ -1,7 +1,7 @@
+AudioStreamPlayer
 CollisionShape3D
 StaticBody3D
 Timer
-AudioStreamPlayer
 MeshInstance3D
 Decal
 Node3D
@@ -12,4 +12,3 @@ ColorRect
 OmniLight3D
 Label
 Area3D
-AnimatableBody3D

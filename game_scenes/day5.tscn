@@ -7710,4 +7710,7 @@ libraries = {
 transform = Transform3D(0.999997, 0, 2.08616e-07, 0, 0.999976, 0, -2.08616e-07, 0, 0.999997, -0.381832, 4.19109, -1.56323)
 shape = SubResource("BoxShape3D_q81u5")
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+volume_db = -5.0
+
 [connection signal="area_entered" from="train_stopper" to="." method="_on_train_stopper_area_entered"]

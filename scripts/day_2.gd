@@ -17,7 +17,8 @@ extends Node3D
 @onready var player_tip_text: Label = $player/cam_anchor/cam/UI/tip
 @onready var player_crosshair2: TextureRect = $player/cam_anchor/cam/UI/crosshair2
 @onready var demon_eyes: Node3D = $demon_eyes
-
+@onready var audior: AudioStreamPlayer = $AudioStreamPlayer
+const AMBIENCE = preload("res://sounds/ambience.wav")
 var DEATH = load("res://game_scenes/death.tscn")
 var DEATH_2 = load("res://game_scenes/death2.tscn")
 var DAY3 = load("res://game_scenes/day3.tscn")
@@ -26,6 +27,8 @@ var htrain: bool = true
 var htrain2: bool = true
 
 func _ready() -> void:
+	audior.stream = AMBIENCE
+	audior.play()
 	man_anim.play("mixamo_com")
 	await get_tree().create_timer(6.0).timeout
 	train_passby_1.show()

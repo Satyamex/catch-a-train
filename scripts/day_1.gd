@@ -20,7 +20,8 @@ extends Node3D
 @onready var train_winning: Node3D = $"train-winning"
 @onready var player: CharacterBody3D = $player
 @onready var player_crosshair2: TextureRect = $player/cam_anchor/cam/UI/crosshair2
-
+@onready var audio: AudioStreamPlayer = $AudioStreamPlayer
+const AMBIENCE = preload("res://sounds/ambience.wav")
 var LOOSE_SCREEN = load("res://game_scenes/death.tscn")
 var DEATH_2 = load("res://game_scenes/death2.tscn")
 var WIN_SCREEN = load("res://game_scenes/day2.tscn")
@@ -28,6 +29,8 @@ var interacted_train: bool = false
 var haunted_train_passed: bool = false
 
 func _ready() -> void:
+	audio.stream = AMBIENCE
+	audio.play()
 	await get_tree().create_timer(6.0).timeout
 	train_passby_1.show()
 	train_passby_1.can_move = true

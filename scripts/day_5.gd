@@ -5,8 +5,11 @@ extends Node3D
 @onready var train_haunted: Node3D = $"train-haunted"
 var DEATH_2 = load("res://game_scenes/death2.tscn")
 var htrain_passed: bool = false
-
+@onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
+const AMBIENCE = preload("res://sounds/ambience.wav")
 func _ready() -> void:
+	audio_stream_player.stream = AMBIENCE
+	audio_stream_player.play()
 	light_blink()
 	await get_tree().create_timer(9.0).timeout
 	train_passby_1.show()

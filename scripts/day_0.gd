@@ -1,7 +1,7 @@
 extends Node3D
 
 signal interact_pressed
-
+@onready var audio: AudioStreamPlayer = $AudioStreamPlayer
 @onready var man_anims: AnimationPlayer = $"man/AnimationPlayer"
 @onready var player_crosshair_2: TextureRect = $player/cam_anchor/cam/UI/crosshair2
 @onready var player_raycast: RayCast3D = $player/cam_anchor/cam/raycast
@@ -11,10 +11,13 @@ signal interact_pressed
 @onready var train: Node3D = $train
 @onready var collision_shape: CollisionShape3D = $map_collisions/CollisionShape3D4
 var DAY_1 = load("res://game_scenes/day1.tscn")
+const AMBIENCE = preload("res://sounds/ambience.wav")
 var talked_to_man: bool = false
 var can_go_home: bool = false
 
 func _ready() -> void:
+	audio.stream = AMBIENCE
+	audio.play()
 	play_anim()
 
 func _on_man_animation_player_animation_finished(anim_name: StringName) -> void:

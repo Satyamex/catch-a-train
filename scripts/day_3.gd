@@ -14,7 +14,8 @@ extends Node3D
 @onready var player_raycast: RayCast3D = $player/cam_anchor/cam/raycast
 @onready var player_tip_text: Label = $player/cam_anchor/cam/UI/tip
 @onready var player_crosshair2: TextureRect = $player/cam_anchor/cam/UI/crosshair2
-
+@onready var audio: AudioStreamPlayer = $AudioStreamPlayer
+const AMBIENCE = preload("res://sounds/ambience.wav")
 var DEATH_2 = load("res://game_scenes/death2.tscn")
 var DEATH = load("res://game_scenes/death.tscn")
 var DAY4 = load("res://game_scenes/day4.tscn")
@@ -22,6 +23,8 @@ var DAY4 = load("res://game_scenes/day4.tscn")
 var htrain: bool = true
 
 func _ready() -> void:
+	audio.stream = AMBIENCE
+	audio.play()
 	await get_tree().create_timer(5.0).timeout
 	train_passby_1.show()
 	train_passby_1.can_move = true

@@ -1589,4 +1589,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5853, 0.240048, 40.7331)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="train_stopper"]
 shape = SubResource("BoxShape3D_uppm8")
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+volume_db = -5.0
+
 [connection signal="area_entered" from="train_stopper" to="." method="_on_train_stopper_area_entered"]

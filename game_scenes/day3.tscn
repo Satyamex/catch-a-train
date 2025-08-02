@@ -6095,4 +6095,7 @@ libraries = {
 &"": SubResource("AnimationLibrary_8ms53")
 }
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+volume_db = -5.0
+
 [connection signal="area_entered" from="train_stopper" to="." method="_on_train_stopper_area_entered"]

@@ -16,7 +16,8 @@ extends Node3D
 @onready var player_raycast: RayCast3D = $player/cam_anchor/cam/raycast
 @onready var player_tip_text: Label = $player/cam_anchor/cam/UI/tip
 @onready var player_crosshair2: TextureRect = $player/cam_anchor/cam/UI/crosshair2
-
+@onready var audio: AudioStreamPlayer = $AudioStreamPlayer
+const AMBIENCE = preload("res://sounds/ambience.wav")
 var DEATH_2 = load("res://game_scenes/death2.tscn")
 var DEATH = load("res://game_scenes/death.tscn")
 var DAY5 = load("res://game_scenes/day5.tscn")
@@ -24,6 +25,8 @@ var DAY5 = load("res://game_scenes/day5.tscn")
 var haunted_trains_passed: bool = false
 
 func _ready() -> void:
+	audio.stream = AMBIENCE
+	audio.play()
 	subtitle.text = "tommowrow is my last day at work."
 	await get_tree().create_timer(5.0).timeout
 	subtitle.text = "finally... i will never come here again."

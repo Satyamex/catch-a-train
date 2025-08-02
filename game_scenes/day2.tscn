@@ -6171,6 +6171,9 @@ material_override = SubResource("StandardMaterial3D_68dqc")
 mesh = SubResource("SphereMesh_et817")
 skeleton = NodePath("../../..")
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+volume_db = -5.0
+
 [connection signal="animation_finished" from="map/light8/AnimationPlayer" to="." method="_on_light_animation_player_animation_finished"]
 [connection signal="area_entered" from="train_stopper" to="." method="_on_train_stopper_area_entered"]
 [connection signal="body_entered" from="train_stopper" to="." method="_on_train_stopper_body_entered"]

@@ -6088,5 +6088,8 @@ collision_mask = 3
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.5, 4, -6)
 shape = SubResource("BoxShape3D_72a88")
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+volume_db = -5.0
+
 [connection signal="area_entered" from="train_stopper" to="." method="_on_train_stopper_area_entered"]
 [connection signal="body_entered" from="train_stopper" to="." method="_on_train_stopper_body_entered"]
