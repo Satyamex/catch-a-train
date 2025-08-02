@@ -13,7 +13,11 @@ config_version=5
 config/name="Catch the train!"
 run/main_scene="uid://fbui28nswnr1"
 config/features=PackedStringArray("4.4", "GL Compatibility")
+boot_splash/bg_color=Color(0, 0, 0, 1)
+boot_splash/use_filter=false
+boot_splash/image="uid://byfjj5r7tpr0t"
 config/icon="res://icon.svg"
+boot_splash/minimum_display_time=1200
 
 [debug]
 
@@ -24,6 +28,7 @@ gdscript/warnings/unused_parameter=0
 window/size/viewport_width=640
 window/size/viewport_height=480
 window/vsync/vsync_mode=0
+mouse_cursor/custom_image="uid://c241xdwq0b142"
 
 [editor]
 

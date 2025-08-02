@@ -1424,6 +1424,7 @@ mesh = SubResource("QuadMesh_5nvyf")
 [node name="Ui" type="CanvasLayer" parent="."]
 
 [node name="main_menu" type="CanvasLayer" parent="Ui"]
+visible = false
 
 [node name="play_button" type="Button" parent="Ui/main_menu"]
 anchors_preset = -1
@@ -1490,7 +1491,6 @@ vertical_alignment = 1
 uppercase = true
 
 [node name="credit_menu" type="CanvasLayer" parent="Ui"]
-visible = false
 
 [node name="credit1-text" type="Label" parent="Ui/credit_menu"]
 anchors_preset = 8
@@ -1525,13 +1525,8 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_fonts/font = ExtResource("2_5nvyf")
 theme_override_font_sizes/font_size = 33
-text = "psx models 
-&
-textures by
-elbolilloduro
-on itch.io
-https://elbolilloduro.itch.io/metro
-man model by decodigo on sketchfab"
+text = "credits to assets used on game's
+itch page"
 horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
